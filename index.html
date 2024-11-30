@@ -1158,7 +1158,7 @@ function updatePreview() {
     root.setProperty('--avatarSize', document.getElementById('avatarSize').value + 'px');
     const avatarBorderColor = document.getElementById('avatarBorderColor').value;
     const avatarBorderTransparent = document.getElementById('avatarBorderTransparent').checked;
-    root.setProperty('--avatarBorderColor', avatarBorderTransparent ? 'transparent' : avatarBorderColor);
+    root.setProperty('--avatarBorderColor', avatarBorderTransparent ? '0px transparent' : avatarBorderColor);
     const avatarURL = document.getElementById('avatarImageURL').value;
     root.setProperty('--avatarImageURL', avatarURL ? `url("${avatarURL}")` : 'none');
     root.setProperty('--avatarShape', document.getElementById('avatarShape').value);
