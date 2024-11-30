@@ -1229,25 +1229,26 @@ function updateFooterSettings() {
     footerSettings.footerFontWeight = footerFontWeightInput.value;
 
     // Generate Footer CSS
-    let footerCSS = '';
-    if (footerSettings.showFooter) {
-        footerCSS = `
-            .chat-input:before {
-                content: "${footerSettings.footerText}";
-                position: absolute;
-                bottom: -1px;
-                right: calc(48% - 50px);
-                color: ${footerSettings.footerTextColor};
-                font-size: ${footerSettings.footerFontSize}px;
-                font-family: ${footerSettings.footerFontFamily};
-                font-weight: ${footerSettings.footerFontWeight};
-                padding: 1px 5px 1px 5px;
-            }
-            .d-flex.align-items-center.w-100 {
-                padding-bottom: 2vh;
-            }
-        `;
-    }
+let footerCSS = '';
+if (footerSettings.showFooter) {
+    footerCSS = `
+        .chat-input:before {
+            content: "${footerSettings.footerText}";
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: ${footerSettings.footerTextColor};
+            font-size: ${footerSettings.footerFontSize}px;
+            font-family: ${footerSettings.footerFontFamily};
+            font-weight: ${footerSettings.footerFontWeight};
+            padding: 1px 5px;
+        }
+        .d-flex.align-items-center.w-100 {
+            padding-bottom: 2vh;
+        }
+    `;
+}
 
     // Apply the CSS to the preview
     const styleTag = document.getElementById('footerStyles');
