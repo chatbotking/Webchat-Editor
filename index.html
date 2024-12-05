@@ -148,6 +148,15 @@ input[type="checkbox"] {
     margin-right: 10px;
     vertical-align: middle;
 }
+.color-input-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.color-input-group input[type="text"] {
+    width: 80px;
+    text-transform: uppercase;
+}
 .copy-button {
     width: 100%;
     padding: 10px;
@@ -285,7 +294,7 @@ input[type="checkbox"] {
     align-items: center;
     width: 100%;
     box-sizing: border-box;
-    border-top: 1px solid #e0e0e0;
+    border-top: 0px solid #e0e0e0;
     font-family: var(--fontFamily);
 }
 .chat-input .input-group {
@@ -459,7 +468,7 @@ pre {
 
 /* Change color and position in the on state */
 input:checked + .slider {
-  background-color: #000;
+  background-color: #6b39ff;
 }
 
 input:checked + .slider:before {
@@ -524,12 +533,19 @@ input#slidergradientTransparency {
     </div>
     <div class="section-content">
         <div class="control-group">
+            <label for="headerText">Header Text</label>
+            <input type="text" id="headerText" value="Chat Interface">
+        </div>
+        <div class="control-group">
             <label for="headerTextSize">Header Text Size (px)</label>
             <input type="number" id="headerTextSize" value="18" min="12" max="36">
         </div>
         <div class="control-group">
             <label for="headerTextColor">Header Text Color</label>
-            <input type="color" id="headerTextColor" value="#ffffff">
+            <div class="color-input-group">
+                <input type="color" id="headerTextColor" value="#ffffff">
+                <input type="text" id="headerTextColorText" value="#ffffff" maxlength="7">
+            </div>
         </div>
         <div class="control-group">
             <label for="headerBackgroundType">Header Background Type</label>
@@ -540,13 +556,22 @@ input#slidergradientTransparency {
         </div>
         <div class="control-group" id="headerSolidColorGroup">
             <label for="headerBgSolid">Header Background Color</label>
-            <input type="color" id="headerBgSolid" value="#36d6b5">
+            <div class="color-input-group">
+                <input type="color" id="headerBgSolid" value="#36d6b5">
+                <input type="text" id="headerBgSolidText" value="#36d6b5" maxlength="7">
+            </div>
         </div>
         <div class="control-group" id="headerGradientGroup" style="display: none;">
             <label for="headerBgGradientStart">Gradient Start Color</label>
-            <input type="color" id="headerBgGradientStart" value="#36d6b5">
+            <div class="color-input-group">
+                <input type="color" id="headerBgGradientStart" value="#36d6b5">
+                <input type="text" id="headerBgGradientStartText" value="#36d6b5" maxlength="7">
+            </div>
             <label for="headerBgGradientEnd">Gradient End Color</label>
-            <input type="color" id="headerBgGradientEnd" value="#1abc9c">
+            <div class="color-input-group">
+                <input type="color" id="headerBgGradientEnd" value="#1abc9c">
+                <input type="text" id="headerBgGradientEndText" value="#1abc9c" maxlength="7">
+            </div>
             <label for="headerBgGradientDirection">Gradient Direction</label>
             <select id="headerBgGradientDirection">
                 <option value="to right" selected>To Right</option>
@@ -616,13 +641,22 @@ input#slidergradientTransparency {
         </div>
         <div class="control-group" id="chatAreaSolidColorGroup">
             <label for="chatAreaBgSolid">Chat Area Background Color</label>
-            <input type="color" id="chatAreaBgSolid" value="#f8f9fa">
+            <div class="color-input-group">
+                <input type="color" id="chatAreaBgSolid" value="#f8f9fa">
+                <input type="text" id="chatAreaBgSolidText" value="#f8f9fa" maxlength="7">
+            </div>
         </div>
         <div class="control-group" id="chatAreaGradientGroup" style="display: none;">
             <label for="chatAreaBgGradientStart">Gradient Start Color</label>
-            <input type="color" id="chatAreaBgGradientStart" value="#f8f9fa">
+            <div class="color-input-group">
+                <input type="color" id="chatAreaBgGradientStart" value="#f8f9fa">
+                <input type="text" id="chatAreaBgGradientStartText" value="#f8f9fa" maxlength="7">
+            </div>
             <label for="chatAreaBgGradientEnd">Gradient End Color</label>
-            <input type="color" id="chatAreaBgGradientEnd" value="#e0e0e0">
+            <div class="color-input-group">
+                <input type="color" id="chatAreaBgGradientEnd" value="#e0e0e0">
+                <input type="text" id="chatAreaBgGradientEndText" value="#e0e0e0" maxlength="7">
+            </div>
             <label for="chatAreaBgGradientDirection">Gradient Direction</label>
             <select id="chatAreaBgGradientDirection">
                 <option value="to right" selected>To Right</option>
@@ -686,19 +720,31 @@ input#slidergradientTransparency {
         </div>
         <div class="control-group">
             <label for="botMessageTextColor">Bot Message Text Color</label>
-            <input type="color" id="botMessageTextColor" value="#212529">
+            <div class="color-input-group">
+                <input type="color" id="botMessageTextColor" value="#212529">
+                <input type="text" id="botMessageTextColorText" value="#212529" maxlength="7">
+            </div>
         </div>
         <div class="control-group">
             <label for="botMessageBg">Bot Message Background</label>
-            <input type="color" id="botMessageBg" value="#eeeeee">
+            <div class="color-input-group">
+                <input type="color" id="botMessageBg" value="#eeeeee">
+                <input type="text" id="botMessageBgText" value="#eeeeee" maxlength="7">
+            </div>
         </div>
         <div class="control-group">
             <label for="userMessageTextColor">User Message Text Color</label>
-            <input type="color" id="userMessageTextColor" value="#ffffff">
+            <div class="color-input-group">
+                <input type="color" id="userMessageTextColor" value="#ffffff">
+                <input type="text" id="userMessageTextColorText" value="#ffffff" maxlength="7">
+            </div>
         </div>
         <div class="control-group">
             <label for="userMessageBg">User Message Background</label>
-            <input type="color" id="userMessageBg" value="#36d6b5">
+            <div class="color-input-group">
+                <input type="color" id="userMessageBg" value="#36d6b5">
+                <input type="text" id="userMessageBgText" value="#36d6b5" maxlength="7">
+            </div>
         </div>
     </div>
 </div>
@@ -748,7 +794,10 @@ input#slidergradientTransparency {
         </div>
         <div class="control-group">
             <label for="avatarBorderColor">Avatar Border Color</label>
-            <input type="color" id="avatarBorderColor" value="#36d6b5">
+            <div class="color-input-group">
+                <input type="color" id="avatarBorderColor" value="#36d6b5">
+                <input type="text" id="avatarBorderColorText" value="#36d6b5" maxlength="7">
+            </div>
         </div>
         <!-- New Checkbox for Transparent Border -->
         <div class="control-group">
@@ -760,7 +809,7 @@ input#slidergradientTransparency {
           onchange="
             const avatarBorderColor = document.getElementById('avatarBorderColor');
             if (this.checked) {
-              document.documentElement.style.setProperty('--avatarBorderColor', 'unset');
+              document.documentElement.style.setProperty('--avatarBorderColor', 'transparent');
               avatarBorderColor.disabled = true; /* Disable color selector when transparent */
             } else {
               document.documentElement.style.setProperty('--avatarBorderColor', avatarBorderColor.value);
@@ -802,16 +851,18 @@ input#slidergradientTransparency {
             </label>
         </div>
         <div class="control-group">
-            <label>
-                Mic and Upload Icons Color:
+            <label>Mic and Upload Icons Color:</label>
+            <div class="color-input-group">
                 <input type="color" id="icon-color" value="#000000">
-            </label>
+                <input type="text" id="iconColorText" value="#000000" maxlength="7">
+            </div>
         </div>
         <div class="control-group">
-            <label>
-                Send Icon Color:
+            <label>Send Icon Color:</label>
+            <div class="color-input-group">
                 <input type="color" id="icon-color-send" value="#000000">
-            </label>
+                <input type="text" id="iconColorSendText" value="#000000" maxlength="7">
+            </div>
         </div>
     </div>
 </div>
@@ -832,13 +883,22 @@ input#slidergradientTransparency {
         </div>
         <div class="control-group" id="chatInputSolidColorGroup">
             <label for="chatInputBgSolid">Chat Input Background Color</label>
-            <input type="color" id="chatInputBgSolid" value="#ffffff">
+            <div class="color-input-group">
+                <input type="color" id="chatInputBgSolid" value="#ffffff">
+                <input type="text" id="chatInputBgSolidText" value="#ffffff" maxlength="7">
+            </div>
         </div>
         <div class="control-group" id="chatInputGradientGroup" style="display: none;">
             <label for="chatInputBgGradientStart">Chat Input Gradient Start Color</label>
-            <input type="color" id="chatInputBgGradientStart" value="#ffffff">
+            <div class="color-input-group">
+                <input type="color" id="chatInputBgGradientStart" value="#ffffff">
+                <input type="text" id="chatInputBgGradientStartText" value="#ffffff" maxlength="7">
+            </div>
             <label for="chatInputBgGradientEnd">Chat Input Gradient End Color</label>
-            <input type="color" id="chatInputBgGradientEnd" value="#f1f1f1">
+            <div class="color-input-group">
+                <input type="color" id="chatInputBgGradientEnd" value="#f1f1f1">
+                <input type="text" id="chatInputBgGradientEndText" value="#f1f1f1" maxlength="7">
+            </div>
             <label for="chatInputBgGradientDirection">Gradient Direction</label>
             <select id="chatInputBgGradientDirection">
                 <option value="to right" selected>To Right</option>
@@ -851,11 +911,17 @@ input#slidergradientTransparency {
         </div>
         <div class="control-group">
             <label for="chatInputTextFieldBg">Text Field Background Color</label>
-            <input type="color" id="chatInputTextFieldBg" value="#f1f1f1">
+            <div class="color-input-group">
+                <input type="color" id="chatInputTextFieldBg" value="#f1f1f1">
+                <input type="text" id="chatInputTextFieldBgText" value="#f1f1f1" maxlength="7">
+            </div>
         </div>
         <div class="control-group">
             <label for="chatInputTextFieldTextColor">Text Field Text Color</label>
-            <input type="color" id="chatInputTextFieldTextColor" value="#333333">
+            <div class="color-input-group">
+                <input type="color" id="chatInputTextFieldTextColor" value="#333333">
+                <input type="text" id="chatInputTextFieldTextColorText" value="#333333" maxlength="7">
+            </div>
         </div>
         <div class="control-group">
             <label for="chatInputCornerStyle">Chat Input Corner Style</label>
@@ -887,7 +953,10 @@ input#slidergradientTransparency {
         <br>
         <label>
             Footer Text Color:
-            <input type="color" id="footer-text-color" value="#000">
+            <div class="color-input-group">
+                <input type="color" id="footer-text-color" value="#000">
+                <input type="text" id="footerTextColorText" value="#000000" maxlength="7">
+            </div>
         </label>
         <br>
         <label>
@@ -1139,7 +1208,7 @@ function generateCSS() {
         align-items: center;
         width: 100%;
         box-sizing: border-box;
-        border-top: 1px solid #e0e0e0;
+        border-top: 0px solid #e0e0e0;
         font-family: var(--fontFamily);
     }
     .chat-input .input-group {
@@ -1192,6 +1261,7 @@ function updatePreview() {
     const cornerStyle = document.getElementById('cornerStyle').value;
     let fontFamily = document.getElementById('fontFamily').value;
     const headerBackgroundType = document.getElementById('headerBackgroundType').value;
+    const headerText = document.getElementById('headerText').value;
 
     root.setProperty('--headerTextSize', headerTextSize);
     root.setProperty('--headerTextColor', headerTextColor);
@@ -1199,6 +1269,9 @@ function updatePreview() {
     root.setProperty('--headerTextAlign', headerTextAlign);
     root.setProperty('--cornerStyle', cornerStyle);
     root.setProperty('--fontFamily', fontFamily);
+
+    // Update Header Text
+    document.querySelector('.chat-header').textContent = headerText;
 
     // Update font family and weight in preview elements
     document.querySelectorAll('.preview, .chat-preview-container, .chat-header, .chat-area, .chat-input, .message-text, pre, .card-button').forEach(el => {
@@ -1379,7 +1452,7 @@ const footerSettings = {
     showFooter: true,
     footerText: 'Developed by Chatbot Builder AI',
     footerTextColor: '#000000',
-    footerFontSize: 12,
+    footerFontSize: 10,
     footerFontFamily: 'sans-serif',
     footerFontWeight: 'normal',
 };
@@ -1540,6 +1613,60 @@ document.getElementById('footer-font-weight').addEventListener('change', (e) => 
     updateFooterSettings();
     generateCSS();
     saveSettings();
+});
+
+// Synchronize Color Pickers and Text Inputs
+function syncColorInputs(colorPickerId, textInputId) {
+    const colorPicker = document.getElementById(colorPickerId);
+    const textInput = document.getElementById(textInputId);
+
+    // Update text input when color picker changes
+    colorPicker.addEventListener('input', () => {
+        textInput.value = colorPicker.value.toUpperCase();
+        updatePreview();
+    });
+
+    // Update color picker when text input changes
+    textInput.addEventListener('input', () => {
+        let value = textInput.value.trim().toUpperCase();
+        if (!value.startsWith('#')) {
+            value = '#' + value;
+        }
+        if (/^#([0-9A-F]{3}){1,2}$/i.test(value)) {
+            colorPicker.value = value;
+            textInput.value = value;
+            updatePreview();
+        }
+    });
+}
+
+// List of color input pairs
+const colorInputPairs = [
+    ['headerTextColor', 'headerTextColorText'],
+    ['headerBgSolid', 'headerBgSolidText'],
+    ['headerBgGradientStart', 'headerBgGradientStartText'],
+    ['headerBgGradientEnd', 'headerBgGradientEndText'],
+    ['chatAreaBgSolid', 'chatAreaBgSolidText'],
+    ['chatAreaBgGradientStart', 'chatAreaBgGradientStartText'],
+    ['chatAreaBgGradientEnd', 'chatAreaBgGradientEndText'],
+    ['botMessageTextColor', 'botMessageTextColorText'],
+    ['botMessageBg', 'botMessageBgText'],
+    ['userMessageTextColor', 'userMessageTextColorText'],
+    ['userMessageBg', 'userMessageBgText'],
+    ['avatarBorderColor', 'avatarBorderColorText'],
+    ['icon-color', 'iconColorText'],
+    ['icon-color-send', 'iconColorSendText'],
+    ['chatInputBgSolid', 'chatInputBgSolidText'],
+    ['chatInputBgGradientStart', 'chatInputBgGradientStartText'],
+    ['chatInputBgGradientEnd', 'chatInputBgGradientEndText'],
+    ['chatInputTextFieldBg', 'chatInputTextFieldBgText'],
+    ['chatInputTextFieldTextColor', 'chatInputTextFieldTextColorText'],
+    ['footer-text-color', 'footerTextColorText']
+];
+
+// Initialize synchronization for each pair
+colorInputPairs.forEach(([colorPickerId, textInputId]) => {
+    syncColorInputs(colorPickerId, textInputId);
 });
 
 // Event Listeners for All Inputs to Update Preview and Save Settings
