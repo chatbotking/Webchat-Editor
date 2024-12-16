@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Custom Chat Interface</title>
+<title>Chatbot Builder AI’s Visual Webchat Editor</title>
 <link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto|Open+Sans|Lato|Ubuntu&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 
@@ -31,10 +31,22 @@
     --chatAreaBackgroundPosition: center;
     --chatAreaBackgroundRepeat: no-repeat;
     --chatAreaBackgroundSize: cover;
+    --chatAreaGradient: none;
 
     /* Messages */
     --messageTextSize: 14px;
-    --messageCornerStyle: 20px;
+
+    /* User Message Corners & Borders */
+    --userMessageCornerStyle: 20px;
+    --userMessageBorderColor: #ffffff;
+    --userMessageBorderThickness: 3px;
+
+    /* Bot Message Corners & Borders */
+    --botMessageCornerStyle: 20px;
+    --botMessageBorderColor: #ffffff;
+    --botMessageBorderThickness: 3px;
+
+    /* Bot & User Colors */
     --botMessageTextColor: #212529;
     --botMessageBg: #eeeeee;
     --userMessageTextColor: #ffffff;
@@ -43,6 +55,7 @@
     /* Avatar */
     --avatarSize: 50px;
     --avatarBorderColor: #36d6b5;
+    --avatarBorderThickness: 3px;
     --avatarImageURL: url("https://via.placeholder.com/50");
     --avatarDisplay: inline-block;
     --avatarShape: 50%;
@@ -57,31 +70,30 @@
 
     /* Icon Settings */
     --iconsDisplay: inline-block;
+    --iconsColor: #000000;
+    --iconsColorSend: #000000;
 
     /* Button Styles */
     --buttonTextSize: var(--messageTextSize);
     --buttonFontWeight: var(--fontWeight);
     --buttonPadding: 10px 20px;
 }
-
-
 body {
     background-color: var(--secondaryColor);
-    font-family: Arial, sans-serif; /* Use a default font for controls */
+    font-family: Arial, sans-serif; 
     height: 100vh;
     margin-top: 7px;
 }
 .container {
     display: flex;
     height: 98vh;
-
 }
 .controls {
     width: 300px;
     background: var(--secondaryColor);
     padding: 20px 5px 15px 0px;
     overflow-y: auto;
-    border-right: 1px solid #e0e0e0;
+    border-right: 0px solid #e0e0e0;
     height: 100%;
 }
 .preview {
@@ -93,8 +105,6 @@ body {
     height: 100%;
     overflow: hidden;
 }
-
-/* Sections */
 .section {
     margin-bottom: 24px;
     background: #f8f9fa;
@@ -113,17 +123,15 @@ body {
     background: #36d6b5;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    }
+}
 .section-title .toggle-icon {
     margin-right: 10px;
     font-weight: bold;
 }
 .section-content {
     padding: 15px;
-    display: none; /* Start with sections closed */
+    display: none;
 }
-
-/* Controls */
 .control-group { margin-bottom: 12px; }
 label {
     display: block;
@@ -131,9 +139,7 @@ label {
     font-size: 14px;
     color: #4a5568;
 }
-
 select { cursor: pointer; }
-
 input, select, textarea {
     width: 100%;
     padding: 8px;
@@ -169,7 +175,6 @@ input[type="checkbox"] {
     transition: background 0.3s;
 }
 .copy-button:hover { background: #3986FF; }
-
 .reset-button {
     width: 100%;
     padding: 10px;
@@ -183,8 +188,6 @@ input[type="checkbox"] {
     margin-top: 20px;
 }
 .reset-button:hover { background: #c0392b; }
-
-/* Preview Area */
 .chat-preview-container {
     flex: 1;
     display: flex;
@@ -225,7 +228,7 @@ input[type="checkbox"] {
     background-position: var(--chatAreaBackgroundPosition);
     background-repeat: var(--chatAreaBackgroundRepeat);
     background-size: var(--chatAreaBackgroundSize);
-    }
+}
 .other-message {
     position: relative;
     margin-bottom: 15px;
@@ -243,20 +246,19 @@ input[type="checkbox"] {
     background-size: cover;
     background-repeat: no-repeat;
     border-radius: var(--avatarShape);
-    border: 3px solid var(--avatarBorderColor);
+    border: var(--avatarBorderThickness) solid var(--avatarBorderColor);
 }
 .other-message .message-text {
     background-color: var(--botMessageBg);
     color: var(--botMessageTextColor);
     font-size: var(--messageTextSize);
-    border-radius: var(--messageCornerStyle);
+    border-radius: var(--botMessageCornerStyle);
     padding: 10px 15px;
     word-wrap: break-word;
     font-family: var(--fontFamily);
     margin-bottom: 5px;
+    border: var(--botMessageBorderThickness) solid var(--botMessageBorderColor);
 }
-
-/* User Message Styling */
 .my-message {
     padding-right: 0;
     margin-bottom: 15px;
@@ -266,26 +268,23 @@ input[type="checkbox"] {
     background-color: var(--userMessageBg) !important;
     color: var(--userMessageTextColor);
     font-size: var(--messageTextSize);
-    border-radius: var(--messageCornerStyle);
+    border-radius: var(--userMessageCornerStyle);
     padding: 10px 15px;
     word-wrap: break-word;
     font-family: var(--fontFamily);
     margin-bottom: 5px;
     margin-top: 5vh;
+    border: var(--userMessageBorderThickness) solid var(--userMessageBorderColor);
 }
-/* Apply user text color to all child elements */
 .my-message .message-text * {
     color: var(--userMessageTextColor) !important;
 }
-/* Apply bot text color to all child elements */
 .other-message .message-text * {
     color: var(--botMessageTextColor);
 }
-/* Message Text Inheritance */
 .message-text * {
     font-family: inherit;
 }
-/* Chat Input Styling */
 .chat-input {
     height: var(--chatInputHeight);
     padding: 10px;
@@ -316,7 +315,6 @@ input[type="checkbox"] {
     box-sizing: border-box;
     flex: 1;
 }
-/* Success Message */
 .success-message {
     display: none;
     position: fixed;
@@ -330,7 +328,6 @@ input[type="checkbox"] {
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     z-index: 1000;
 }
-/* Generated CSS Styles */
 textarea#cssOutput {
     width: 100%;
     height: 200px;
@@ -344,12 +341,6 @@ textarea#cssOutput {
     background-color: #f1f1f1;
     color: #333;
 }
-/* Hide icons in preview */
-.chat-input .uploadBtt {
-    display: none;
-}
-/* Added Styles for Consistent Buttons and Text */
-/* Preformatted Text */
 pre {
     color: var(--botMessageTextColor);
     line-height: 1.5;
@@ -358,11 +349,10 @@ pre {
     font-size: var(--messageTextSize);
     font-family: var(--fontFamily);
 }
-/* Ice Breaker Buttons */
 .chat-ice-breaker {
     position: fixed;
     right: 20px;
-    bottom: 80px; /* Moved up by 20px */
+    bottom: 80px; 
 }
 .chat-ice-breaker button {
     background-color: #FFF7FA;
@@ -381,7 +371,6 @@ pre {
     background-color: #f3e6e6;
     transform: scale(1.05);
 }
-/* Card Buttons */
 .card-button {
     background: #E3F2FD;
     color: var(--botMessageTextColor);
@@ -399,88 +388,60 @@ pre {
     background-color: #d0e7f8;
     transform: scale(1.05);
 }
-/* Additional CSS */
 .chat-input .form-control {
     border-radius: 0 !important;
     border: none !important;
     background-color: var(--chatInputTextFieldBg) !important;
     color: var(--chatInputTextFieldTextColor) !important;
-    background: var(--chatInputTextFieldBg) !important;
 }
 .chat-input .input-group{
-        background-color: var(--chatInputTextFieldBg) !important;
-    }
-
+    background-color: var(--chatInputTextFieldBg) !important;
+}
 .input-group > .custom-select:not(:last-child),
 .input-group > .form-control:not(:last-child) {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
-.chat-input .input-group {
-    flex: 1;
-    border-radius: var(--chatInputBorderRadius) !important;
-    background-color: var(--chatInputTextFieldBg) !important;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-}
-
-/* Container styling */
 .switch {
   position: relative;
   display: inline-block;
   width: 50px;
   height: 25px;
 }
-
-/* Hide the original checkbox */
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
-
-/* Slider styling */
 .slider {
   position: absolute;
   cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   background-color: #ccc;
   transition: 0.4s;
   border-radius: 25px;
 }
-
-/* Button position in the off state */
 .slider:before {
   position: absolute;
   content: "";
   height: 19px;
   width: 19px;
-  left: 3px;
-  bottom: 3px;
+  left: 3px; bottom: 3px;
   background-color: white;
   transition: 0.4s;
   border-radius: 50%;
 }
-
-/* Change color and position in the on state */
 input:checked + .slider {
   background-color: #6b39ff;
 }
-
 input:checked + .slider:before {
   transform: translateX(24px);
 }
-
 .icon-container.active {
-    display: flex; /* Activates the display */
+    display: flex; 
 }
-
 .icon-container {
-    display: none; /* Hidden by default */
+    display: none; 
     gap: 25px;
     padding: 9px;
     width: max-content;
@@ -492,11 +453,9 @@ input:checked + .slider:before {
     bottom: 20px;
     font-family: "Font Awesome 6 Free" !important;
 }
-
 i.fa-solid.fa-microphone:hover, i.fa-solid.fa-paperclip:hover {
     filter: invert(0.7);
 }
-
 i.fa-solid.fa-microphone {
     border-radius: 7px;
     font-family: "Font Awesome 6 Free" !important;
@@ -505,7 +464,6 @@ i.fa-solid.fa-paperclip {
     border-radius: 7px;
     font-family: "Font Awesome 6 Free" !important;
 }
-
 .icone-send i {
     font-size: 30px;
     color: var(--iconsColorSend);
@@ -516,7 +474,6 @@ i.fa-solid.fa-paperclip {
     bottom: 24px;
     rotate: 43deg;
 }
-
 input#slidergradientTransparency {
     padding: 0px;
 }
@@ -526,733 +483,649 @@ input#slidergradientTransparency {
 <div class="container">
     <div class="controls">
       <!-- Header Settings -->
-<div class="section">
-    <div class="section-title">
-        <span class="toggle-icon">+</span>
-        Header Settings
-    </div>
-    <div class="section-content">
-        <div class="control-group">
-            <label for="headerText">Header Text</label>
-            <input type="text" id="headerText" value="Chat Interface">
+      <div class="section">
+        <div class="section-title">
+            <span class="toggle-icon">+</span>
+            Header Settings
         </div>
-        <div class="control-group">
-            <label for="headerTextSize">Header Text Size (px)</label>
-            <input type="number" id="headerTextSize" value="18" min="12" max="36">
-        </div>
-        <div class="control-group">
-            <label for="headerTextColor">Header Text Color</label>
-            <div class="color-input-group">
-                <input type="color" id="headerTextColor" value="#ffffff">
-                <input type="text" id="headerTextColorText" value="#ffffff" maxlength="7">
+        <div class="section-content">
+            <div class="control-group">
+                <label for="headerText">Header Text</label>
+                <input type="text" id="headerText" value="Chat Interface">
+            </div>
+            <div class="control-group">
+                <label for="headerTextSize">Header Text Size (px)</label>
+                <input type="number" id="headerTextSize" value="18" min="12" max="36">
+            </div>
+            <div class="control-group">
+                <label for="headerTextColor">Header Text Color</label>
+                <div class="color-input-group">
+                    <input type="color" id="headerTextColor" value="#ffffff">
+                    <input type="text" id="headerTextColorText" value="#ffffff" maxlength="7">
+                </div>
+            </div>
+            <div class="control-group">
+                <label for="headerBackgroundType">Header Background Type</label>
+                <select id="headerBackgroundType">
+                    <option value="solid" selected>Solid</option>
+                    <option value="gradient">Gradient</option>
+                </select>
+            </div>
+            <div class="control-group" id="headerSolidColorGroup">
+                <label for="headerBgSolid">Header Background Color</label>
+                <div class="color-input-group">
+                    <input type="color" id="headerBgSolid" value="#36d6b5">
+                    <input type="text" id="headerBgSolidText" value="#36d6b5" maxlength="7">
+                </div>
+            </div>
+            <div class="control-group" id="headerGradientGroup" style="display: none;">
+                <label for="headerBgGradientStart">Gradient Start Color</label>
+                <div class="color-input-group">
+                    <input type="color" id="headerBgGradientStart" value="#36d6b5">
+                    <input type="text" id="headerBgGradientStartText" value="#36d6b5" maxlength="7">
+                </div>
+                <label for="headerBgGradientEnd">Gradient End Color</label>
+                <div class="color-input-group">
+                    <input type="color" id="headerBgGradientEnd" value="#1abc9c">
+                    <input type="text" id="headerBgGradientEndText" value="#1abc9c" maxlength="7">
+                </div>
+                <label for="headerBgGradientDirection">Gradient Direction</label>
+                <select id="headerBgGradientDirection">
+                    <option value="to right" selected>To Right</option>
+                    <option value="to bottom">To Bottom</option>
+                    <option value="to left">To Left</option>
+                    <option value="to top">To Top</option>
+                    <option value="45deg">45 degrees</option>
+                    <option value="135deg">135 degrees</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="headerHeight">Header Height (px)</label>
+                <input type="number" id="headerHeight" value="60" min="40" max="150">
+            </div>
+            <div class="control-group">
+                <label for="headerTextAlign">Text Alignment</label>
+                <select id="headerTextAlign">
+                    <option value="left">Left</option>
+                    <option value="center" selected>Center</option>
+                    <option value="right">Right</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="cornerStyle">Corner Style</label>
+                <select id="cornerStyle">
+                    <option value="0px">Straight</option>
+                    <option value="20px" selected>Rounded</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="headerLogoURL">Header Logo URL</label>
+                <input type="url" id="headerLogoURL" placeholder="https://example.com/logo.png">
+            </div>
+            <div class="control-group" id="headerLogoSizeGroup" style="display: none;">
+                <label for="headerLogoWidth">Logo Width (px)</label>
+                <input type="number" id="headerLogoWidth" value="40" min="10" max="200">
+            </div>
+            <div class="control-group" id="headerLogoPositionGroup" style="display: none;">
+                <label for="headerLogoAlignment">Logo Alignment</label>
+                <select id="headerLogoAlignment">
+                    <option value="left" selected>Left</option>
+                    <option value="center">Center</option>
+                    <option value="right">Right</option>
+                </select>
+                <label for="headerLogoOffsetX">Logo Offset X (px)</label>
+                <input type="number" id="headerLogoOffsetX" value="0">
+                <label for="headerLogoOffsetY">Logo Offset Y (px)</label>
+                <input type="number" id="headerLogoOffsetY" value="0">
             </div>
         </div>
-        <div class="control-group">
-            <label for="headerBackgroundType">Header Background Type</label>
-            <select id="headerBackgroundType">
-                <option value="solid" selected>Solid</option>
-                <option value="gradient">Gradient</option>
-            </select>
+      </div>
+      <!-- Chat Area Settings -->
+      <div class="section">
+        <div class="section-title">
+            <span class="toggle-icon">+</span>
+            Chat Area Settings
         </div>
-        <div class="control-group" id="headerSolidColorGroup">
-            <label for="headerBgSolid">Header Background Color</label>
-            <div class="color-input-group">
-                <input type="color" id="headerBgSolid" value="#36d6b5">
-                <input type="text" id="headerBgSolidText" value="#36d6b5" maxlength="7">
+        <div class="section-content">
+            <div class="control-group">
+                <label for="chatAreaBackgroundType">Chat Area Background Type</label>
+                <select id="chatAreaBackgroundType">
+                    <option value="solid" selected>Solid</option>
+                    <option value="gradient">Gradient</option>
+                    <option value="image">Image</option>
+                </select>
+            </div>
+            <div class="control-group" id="chatAreaSolidColorGroup">
+                <label for="chatAreaBgSolid">Chat Area Background Color</label>
+                <div class="color-input-group">
+                    <input type="color" id="chatAreaBgSolid" value="#f8f9fa">
+                    <input type="text" id="chatAreaBgSolidText" value="#f8f9fa" maxlength="7">
+                </div>
+            </div>
+            <div class="control-group" id="chatAreaGradientGroup" style="display: none;">
+                <label for="chatAreaBgGradientStart">Gradient Start Color</label>
+                <div class="color-input-group">
+                    <input type="color" id="chatAreaBgGradientStart" value="#f8f9fa">
+                    <input type="text" id="chatAreaBgGradientStartText" value="#f8f9fa" maxlength="7">
+                </div>
+                <label for="chatAreaBgGradientEnd">Gradient End Color</label>
+                <div class="color-input-group">
+                    <input type="color" id="chatAreaBgGradientEnd" value="#e0e0e0">
+                    <input type="text" id="chatAreaBgGradientEndText" value="#e0e0e0" maxlength="7">
+                </div>
+                <label for="chatAreaBgGradientDirection">Gradient Direction</label>
+                <select id="chatAreaBgGradientDirection">
+                    <option value="to right" selected>To Right</option>
+                    <option value="to bottom">To Bottom</option>
+                    <option value="to left">To Left</option>
+                    <option value="to top">To Top</option>
+                    <option value="45deg">45 degrees</option>
+                    <option value="135deg">135 degrees</option>
+                </select>
+            </div>
+            <div class="control-group" id="chatAreaImageGroup" style="display: none;">
+                <label for="chatAreaBgImageURL">Background Image URL</label>
+                <input type="url" id="chatAreaBgImageURL" placeholder="https://example.com/image.jpg">
+                <label for="chatAreaBgSize">Background Size</label>
+                <select id="chatAreaBgSize">
+                    <option value="cover">Cover</option>
+                    <option value="contain">Contain</option>
+                    <option value="auto">Auto</option>
+                </select>
+                <label for="chatAreaBgRepeat">Background Repeat</label>
+                <select id="chatAreaBgRepeat">
+                    <option value="no-repeat">No Repeat</option>
+                    <option value="repeat">Repeat</option>
+                    <option value="repeat-x">Repeat Horizontally</option>
+                    <option value="repeat-y">Repeat Vertically</option>
+                </select>
+            </div>
+            <div class="control-group" id="chatAreaTransparencyGroup" style="display: none;">
+                <label for="gradientSelector">Select Transparency</label>
+                <select id="gradientSelector">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+                <div class="slidergradientTransparency">
+                    <label for="slidergradientTransparency">Transparency Intensity</label>
+                    <input type="range" id="slidergradientTransparency" class="slidergradientTransparency" min="0" max="100" value="0">
+                </div>
             </div>
         </div>
-        <div class="control-group" id="headerGradientGroup" style="display: none;">
-            <label for="headerBgGradientStart">Gradient Start Color</label>
-            <div class="color-input-group">
-                <input type="color" id="headerBgGradientStart" value="#36d6b5">
-                <input type="text" id="headerBgGradientStartText" value="#36d6b5" maxlength="7">
+      </div>
+      <!-- Message Settings -->
+      <div class="section">
+        <div class="section-title">
+            <span class="toggle-icon">+</span>
+            Message Settings
+        </div>
+        <div class="section-content">
+            <div class="control-group">
+                <label for="messageTextSize">Message Text Size (px)</label>
+                <input type="number" id="messageTextSize" value="14" min="12" max="24">
             </div>
-            <label for="headerBgGradientEnd">Gradient End Color</label>
-            <div class="color-input-group">
-                <input type="color" id="headerBgGradientEnd" value="#1abc9c">
-                <input type="text" id="headerBgGradientEndText" value="#1abc9c" maxlength="7">
+            <!-- Bot Message Corner Style -->
+            <div class="control-group">
+                <label for="botMessageCornerStyleSelect">Bot Message Corner Style</label>
+                <select id="botMessageCornerStyleSelect">
+                    <option value="0px">SHARP</option>
+                    <option value="20px" selected>ROUNDED</option>
+                    <option value="custom">CUSTOM</option>
+                </select>
             </div>
-            <label for="headerBgGradientDirection">Gradient Direction</label>
-            <select id="headerBgGradientDirection">
-                <option value="to right" selected>To Right</option>
-                <option value="to bottom">To Bottom</option>
-                <option value="to left">To Left</option>
-                <option value="to top">To Top</option>
-                <option value="45deg">45 degrees</option>
-                <option value="135deg">135 degrees</option>
-            </select>
-        </div>
-        <div class="control-group">
-            <label for="headerHeight">Header Height (px)</label>
-            <input type="number" id="headerHeight" value="60" min="40" max="150">
-        </div>
-        <div class="control-group">
-            <label for="headerTextAlign">Text Alignment</label>
-            <select id="headerTextAlign">
-                <option value="left">Left</option>
-                <option value="center" selected>Center</option>
-                <option value="right">Right</option>
-            </select>
-        </div>
-        <div class="control-group">
-            <label for="cornerStyle">Corner Style</label>
-            <select id="cornerStyle">
-                <option value="0px">Straight</option>
-                <option value="20px" selected>Rounded</option>
-            </select>
-        </div>
-        <div class="control-group">
-            <label for="headerLogoURL">Header Logo URL</label>
-            <input type="url" id="headerLogoURL" placeholder="https://example.com/logo.png">
-        </div>
-        <div class="control-group" id="headerLogoSizeGroup" style="display: none;">
-            <label for="headerLogoWidth">Logo Width (px)</label>
-            <input type="number" id="headerLogoWidth" value="40" min="10" max="200">
-        </div>
-        <div class="control-group" id="headerLogoPositionGroup" style="display: none;">
-            <label for="headerLogoAlignment">Logo Alignment</label>
-            <select id="headerLogoAlignment">
-                <option value="left" selected>Left</option>
-                <option value="center">Center</option>
-                <option value="right">Right</option>
-            </select>
-            <label for="headerLogoOffsetX">Logo Offset X (px)</label>
-            <input type="number" id="headerLogoOffsetX" value="0">
-            <label for="headerLogoOffsetY">Logo Offset Y (px)</label>
-            <input type="number" id="headerLogoOffsetY" value="0">
-        </div>
-    </div>
-</div>
-
-<!-- Chat Area Settings -->
-<div class="section">
-    <div class="section-title">
-        <span class="toggle-icon">+</span>
-        Chat Area Settings
-    </div>
-    <div class="section-content">
-        <div class="control-group">
-            <label for="chatAreaBackgroundType">Chat Area Background Type</label>
-            <select id="chatAreaBackgroundType">
-                <option value="solid" selected>Solid</option>
-                <option value="gradient">Gradient</option>
-                <option value="image">Image</option>
-            </select>
-        </div>
-        <div class="control-group" id="chatAreaSolidColorGroup">
-            <label for="chatAreaBgSolid">Chat Area Background Color</label>
-            <div class="color-input-group">
-                <input type="color" id="chatAreaBgSolid" value="#f8f9fa">
-                <input type="text" id="chatAreaBgSolidText" value="#f8f9fa" maxlength="7">
+            <div class="control-group" id="customBotMessageCornerGroup" style="display: none;">
+                <label>Bot Message Custom Corners (top-left, top-right, bottom-right, bottom-left)</label>
+                <input type="text" id="customBotMessageCornerTopLeft" value="20px">
+                <input type="text" id="customBotMessageCornerTopRight" value="20px">
+                <input type="text" id="customBotMessageCornerBottomRight" value="20px">
+                <input type="text" id="customBotMessageCornerBottomLeft" value="20px">
             </div>
-        </div>
-        <div class="control-group" id="chatAreaGradientGroup" style="display: none;">
-            <label for="chatAreaBgGradientStart">Gradient Start Color</label>
-            <div class="color-input-group">
-                <input type="color" id="chatAreaBgGradientStart" value="#f8f9fa">
-                <input type="text" id="chatAreaBgGradientStartText" value="#f8f9fa" maxlength="7">
+            <!-- Bot Message Border -->
+            <div class="control-group">
+                <label for="botMessageBorderColor">Bot Message Border Color</label>
+                <div class="color-input-group">
+                    <input type="color" id="botMessageBorderColor" value="#ffffff">
+                    <input type="text" id="botMessageBorderColorText" value="#ffffff" maxlength="7">
+                </div>
             </div>
-            <label for="chatAreaBgGradientEnd">Gradient End Color</label>
-            <div class="color-input-group">
-                <input type="color" id="chatAreaBgGradientEnd" value="#e0e0e0">
-                <input type="text" id="chatAreaBgGradientEndText" value="#e0e0e0" maxlength="7">
+            <div class="control-group">
+                <label for="botMessageBorderThickness">Bot Message Border Thickness (px)</label>
+                <input type="number" id="botMessageBorderThickness" value="3" min="0" max="10">
             </div>
-            <label for="chatAreaBgGradientDirection">Gradient Direction</label>
-            <select id="chatAreaBgGradientDirection">
-                <option value="to right" selected>To Right</option>
-                <option value="to bottom">To Bottom</option>
-                <option value="to left">To Left</option>
-                <option value="to top">To Top</option>
-                <option value="45deg">45 degrees</option>
-                <option value="135deg">135 degrees</option>
-            </select>
-        </div>
-        <div class="control-group" id="chatAreaImageGroup" style="display: none;">
-            <label for="chatAreaBgImageURL">Background Image URL</label>
-            <input type="url" id="chatAreaBgImageURL" placeholder="https://example.com/image.jpg">
-            <label for="chatAreaBgSize">Background Size</label>
-            <select id="chatAreaBgSize">
-                <option value="cover">Cover</option>
-                <option value="contain">Contain</option>
-                <option value="auto">Auto</option>
-            </select>
-            <label for="chatAreaBgRepeat">Background Repeat</label>
-            <select id="chatAreaBgRepeat">
-                <option value="no-repeat">No Repeat</option>
-                <option value="repeat">Repeat</option>
-                <option value="repeat-x">Repeat Horizontally</option>
-                <option value="repeat-y">Repeat Vertically</option>
-            </select>
-        </div>
-        <!-- New Dropdown and Slider for Gradient -->
-        <div class="control-group" id="chatAreaTransparencyGroup" style="display: none;">
-            <label for="gradientSelector">Select Transparency</label>
-            <select id="gradientSelector">
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-            </select>
-
-            <div class="slidergradientTransparency">
-                <label for="slidergradientTransparency">Transparency Intensity</label>
-                <input type="range" id="slidergradientTransparency" class="slidergradientTransparency" min="0" max="100" value="0">
+            <div class="control-group">
+                <label for="botMessageTextColor">Bot Message Text Color</label>
+                <div class="color-input-group">
+                    <input type="color" id="botMessageTextColor" value="#212529">
+                    <input type="text" id="botMessageTextColorText" value="#212529" maxlength="7">
+                </div>
+            </div>
+            <div class="control-group">
+                <label for="botMessageBg">Bot Message Background</label>
+                <div class="color-input-group">
+                    <input type="color" id="botMessageBg" value="#eeeeee">
+                    <input type="text" id="botMessageBgText" value="#eeeeee" maxlength="7">
+                </div>
+            </div>
+            <!-- User Message Corner Style -->
+            <div class="control-group">
+                <label for="userMessageCornerStyleSelect">User Message Corner Style</label>
+                <select id="userMessageCornerStyleSelect">
+                    <option value="0px">SHARP</option>
+                    <option value="20px" selected>ROUNDED</option>
+                    <option value="custom">CUSTOM</option>
+                </select>
+            </div>
+            <div class="control-group" id="customUserMessageCornerGroup" style="display: none;">
+                <label>User Message Custom Corners (top-left, top-right, bottom-right, bottom-left)</label>
+                <input type="text" id="customUserMessageCornerTopLeft" value="20px">
+                <input type="text" id="customUserMessageCornerTopRight" value="20px">
+                <input type="text" id="customUserMessageCornerBottomRight" value="20px">
+                <input type="text" id="customUserMessageCornerBottomLeft" value="20px">
+            </div>
+            <!-- User Message Border -->
+            <div class="control-group">
+                <label for="userMessageBorderColor">User Message Border Color</label>
+                <div class="color-input-group">
+                    <input type="color" id="userMessageBorderColor" value="#ffffff">
+                    <input type="text" id="userMessageBorderColorText" value="#ffffff" maxlength="7">
+                </div>
+            </div>
+            <div class="control-group">
+                <label for="userMessageBorderThickness">User Message Border Thickness (px)</label>
+                <input type="number" id="userMessageBorderThickness" value="3" min="0" max="10">
+            </div>
+            <div class="control-group">
+                <label for="userMessageTextColor">User Message Text Color</label>
+                <div class="color-input-group">
+                    <input type="color" id="userMessageTextColor" value="#ffffff">
+                    <input type="text" id="userMessageTextColorText" value="#ffffff" maxlength="7">
+                </div>
+            </div>
+            <div class="control-group">
+                <label for="userMessageBg">User Message Background</label>
+                <div class="color-input-group">
+                    <input type="color" id="userMessageBg" value="#36d6b5">
+                    <input type="text" id="userMessageBgText" value="#36d6b5" maxlength="7">
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- Message Settings -->
-<div class="section">
-    <div class="section-title">
-        <span class="toggle-icon">+</span>
-        Message Settings
-    </div>
-    <div class="section-content">
-        <div class="control-group">
-            <label for="messageTextSize">Message Text Size (px)</label>
-            <input type="number" id="messageTextSize" value="14" min="12" max="24">
+      </div>
+      <!-- Font Settings -->
+      <div class="section">
+        <div class="section-title">
+            <span class="toggle-icon">+</span>
+            Font Settings
         </div>
-        <div class="control-group">
-            <label for="messageCornerStyle">Message Corner Style</label>
-            <select id="messageCornerStyle">
-                <option value="0px">Straight</option>
-                <option value="20px" selected>Rounded</option>
-            </select>
-        </div>
-        <div class="control-group">
-            <label for="botMessageTextColor">Bot Message Text Color</label>
-            <div class="color-input-group">
-                <input type="color" id="botMessageTextColor" value="#212529">
-                <input type="text" id="botMessageTextColorText" value="#212529" maxlength="7">
+        <div class="section-content">
+            <div class="control-group">
+                <label for="fontFamily">Font Family</label>
+                <select id="fontFamily">
+                    <option value="Helvetica, Arial, sans-serif" selected>Helvetica</option>
+                    <option value="Arial, sans-serif">Arial</option>
+                    <option value="'Times New Roman', Times, serif">Times New Roman</option>
+                    <option value="Georgia, serif">Georgia</option>
+                    <option value="'Courier New', Courier, monospace">Courier New</option>
+                    <option value="'Montserrat', sans-serif">Montserrat</option>
+                    <option value="'Roboto', sans-serif">Roboto</option>
+                    <option value="'Open Sans', sans-serif">Open Sans</option>
+                    <option value="'Lato', sans-serif">Lato</option>
+                    <option value="'Ubuntu', sans-serif">Ubuntu</option>
+                </select>
             </div>
         </div>
-        <div class="control-group">
-            <label for="botMessageBg">Bot Message Background</label>
-            <div class="color-input-group">
-                <input type="color" id="botMessageBg" value="#eeeeee">
-                <input type="text" id="botMessageBgText" value="#eeeeee" maxlength="7">
+      </div>
+      <!-- Avatar Settings -->
+      <div class="section">
+        <div class="section-title">
+            <span class="toggle-icon">+</span>
+            Avatar Settings
+        </div>
+        <div class="section-content">
+            <div class="control-group">
+               <label for="showAvatar">Show Avatar</label>
+          <label class="switch">
+            <input type="checkbox" id="showAvatar" checked>
+            <span class="slider"></span>
+          </label>
+            </div>
+            <div class="control-group">
+                <label for="avatarSize">Avatar Size (px)</label>
+                <input type="number" id="avatarSize" value="50" min="20" max="100">
+            </div>
+            <div class="control-group">
+                <label for="avatarBorderColor">Avatar Border Color</label>
+                <div class="color-input-group">
+                    <input type="color" id="avatarBorderColor" value="#36d6b5">
+                    <input type="text" id="avatarBorderColorText" value="#36d6b5" maxlength="7">
+                </div>
+            </div>
+            <div class="control-group">
+                <label for="avatarBorderThickness">Avatar Border Thickness (px)</label>
+                <input type="number" id="avatarBorderThickness" value="3" min="0" max="10">
+            </div>
+            <div class="control-group">
+               <label for="avatarBorderTransparent">Transparent Border</label>
+          <label class="switch">
+            <input 
+              type="checkbox" 
+              id="avatarBorderTransparent"
+              onchange="
+                const avatarBorderColor = document.getElementById('avatarBorderColor');
+                if (this.checked) {
+                  document.documentElement.style.setProperty('--avatarBorderColor', 'transparent');
+                  avatarBorderColor.disabled = true; 
+                } else {
+                  document.documentElement.style.setProperty('--avatarBorderColor', avatarBorderColor.value);
+                  avatarBorderColor.disabled = false; 
+                }
+                generateCSS(); 
+                saveSettings();
+              "
+            >
+            <span class="slider"></span>
+          </label>
+            </div>
+            <div class="control-group">
+                <label for="avatarImageURL">Avatar Image URL</label>
+                <input type="url" id="avatarImageURL" placeholder="https://example.com/avatar.jpg" value="https://via.placeholder.com/50">
+            </div>
+            <div class="control-group">
+                <label for="avatarShape">Avatar Shape</label>
+                <select id="avatarShape">
+                    <option value="50%">Circle</option>
+                    <option value="0%">Square</option>
+                </select>
             </div>
         </div>
-        <div class="control-group">
-            <label for="userMessageTextColor">User Message Text Color</label>
-            <div class="color-input-group">
-                <input type="color" id="userMessageTextColor" value="#ffffff">
-                <input type="text" id="userMessageTextColorText" value="#ffffff" maxlength="7">
+      </div>
+      <!-- Icon Settings -->
+      <div class="section">
+        <div class="section-title">
+            <span class="toggle-icon">+</span>
+            Icon Settings
+        </div>
+        <div class="section-content">
+            <div class="control-group">
+                <label for="showIcons">Show Microphone and Upload Icons</label>
+                <label class="switch">
+                    <input type="checkbox" id="showIcons" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>Mic and Upload Icons Color:</label>
+                <div class="color-input-group">
+                    <input type="color" id="icon-color" value="#000000">
+                    <input type="text" id="iconColorText" value="#000000" maxlength="7">
+                </div>
+            </div>
+            <div class="control-group">
+                <label>Send Icon Color:</label>
+                <div class="color-input-group">
+                    <input type="color" id="icon-color-send" value="#000000">
+                    <input type="text" id="iconColorSendText" value="#000000" maxlength="7">
+                </div>
             </div>
         </div>
-        <div class="control-group">
-            <label for="userMessageBg">User Message Background</label>
-            <div class="color-input-group">
-                <input type="color" id="userMessageBg" value="#36d6b5">
-                <input type="text" id="userMessageBgText" value="#36d6b5" maxlength="7">
+      </div>
+      <!-- Chat Input Settings -->
+      <div class="section">
+        <div class="section-title">
+            <span class="toggle-icon">+</span>
+            Chat Input Settings
+        </div>
+        <div class="section-content">
+            <div class="control-group">
+                <label for="chatInputBackgroundType">Chat Input Background Type</label>
+                <select id="chatInputBackgroundType">
+                    <option value="solid" selected>Solid</option>
+                    <option value="gradient">Gradient</option>
+                </select>
+            </div>
+            <div class="control-group" id="chatInputSolidColorGroup">
+                <label for="chatInputBgSolid">Chat Input Background Color</label>
+                <div class="color-input-group">
+                    <input type="color" id="chatInputBgSolid" value="#ffffff">
+                    <input type="text" id="chatInputBgSolidText" value="#ffffff" maxlength="7">
+                </div>
+            </div>
+            <div class="control-group" id="chatInputGradientGroup" style="display: none;">
+                <label for="chatInputBgGradientStart">Chat Input Gradient Start Color</label>
+                <div class="color-input-group">
+                    <input type="color" id="chatInputBgGradientStart" value="#ffffff">
+                    <input type="text" id="chatInputBgGradientStartText" value="#ffffff" maxlength="7">
+                </div>
+                <label for="chatInputBgGradientEnd">Chat Input Gradient End Color</label>
+                <div class="color-input-group">
+                    <input type="color" id="chatInputBgGradientEnd" value="#f1f1f1">
+                    <input type="text" id="chatInputBgGradientEndText" value="#f1f1f1" maxlength="7">
+                </div>
+                <label for="chatInputBgGradientDirection">Gradient Direction</label>
+                <select id="chatInputBgGradientDirection">
+                    <option value="to right" selected>To Right</option>
+                    <option value="to bottom">To Bottom</option>
+                    <option value="to left">To Left</option>
+                    <option value="to top">To Top</option>
+                    <option value="45deg">45°</option>
+                    <option value="135deg">135°</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="chatInputTextFieldBg">Text Field Background Color</label>
+                <div class="color-input-group">
+                    <input type="color" id="chatInputTextFieldBg" value="#f1f1f1">
+                    <input type="text" id="chatInputTextFieldBgText" value="#f1f1f1" maxlength="7">
+                </div>
+            </div>
+            <div class="control-group">
+                <label for="chatInputTextFieldTextColor">Text Field Text Color</label>
+                <div class="color-input-group">
+                    <input type="color" id="chatInputTextFieldTextColor" value="#333333">
+                    <input type="text" id="chatInputTextFieldTextColorText" value="#333333" maxlength="7">
+                </div>
+            </div>
+            <div class="control-group">
+                <label for="chatInputCornerStyle">Chat Input Corner Style</label>
+                <select id="chatInputCornerStyle">
+                    <option value="0px">Straight</option>
+                    <option value="18px" selected>Rounded</option>
+                </select>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- Font Settings -->
-<div class="section">
-    <div class="section-title">
-        <span class="toggle-icon">+</span>
-        Font Settings
-    </div>
-    <div class="section-content">
-        <div class="control-group">
-            <label for="fontFamily">Font Family</label>
-            <select id="fontFamily">
-                <option value="Helvetica, Arial, sans-serif" selected>Helvetica</option>
-                <option value="Arial, sans-serif">Arial</option>
-                <option value="'Times New Roman', Times, serif">Times New Roman</option>
-                <option value="Georgia, serif">Georgia</option>
-                <option value="'Courier New', Courier, monospace">Courier New</option>
-                <option value="'Montserrat', sans-serif">Montserrat</option>
-                <option value="'Roboto', sans-serif">Roboto</option>
-                <option value="'Open Sans', sans-serif">Open Sans</option>
-                <option value="'Lato', sans-serif">Lato</option>
-                <option value="'Ubuntu', sans-serif">Ubuntu</option>
-            </select>
+      </div>
+      <!-- Footer Settings -->
+      <div class="section">
+        <div class="section-title">
+            <span class="toggle-icon">+</span>
+            Footer Settings
         </div>
-    </div>
-</div>
-
-<!-- Avatar Settings -->
-<div class="section">
-    <div class="section-title">
-        <span class="toggle-icon">+</span>
-        Avatar Settings
-    </div>
-    <div class="section-content">
-        <div class="control-group">
-           <label for="showAvatar">Show Avatar</label>
-      <label class="switch">
-        <input type="checkbox" id="showAvatar" checked>
-        <span class="slider"></span>
-      </label>
-        </div>
-        <div class="control-group">
-            <label for="avatarSize">Avatar Size (px)</label>
-            <input type="number" id="avatarSize" value="50" min="20" max="100">
-        </div>
-        <div class="control-group">
-            <label for="avatarBorderColor">Avatar Border Color</label>
-            <div class="color-input-group">
-                <input type="color" id="avatarBorderColor" value="#36d6b5">
-                <input type="text" id="avatarBorderColorText" value="#36d6b5" maxlength="7">
-            </div>
-        </div>
-        <!-- New Checkbox for Transparent Border -->
-        <div class="control-group">
-           <label for="avatarBorderTransparent">Transparent Border</label>
-      <label class="switch">
-        <input 
-          type="checkbox" 
-          id="avatarBorderTransparent" 
-          onchange="
-            const avatarBorderColor = document.getElementById('avatarBorderColor');
-            if (this.checked) {
-              document.documentElement.style.setProperty('--avatarBorderColor', 'transparent');
-              avatarBorderColor.disabled = true; /* Disable color selector when transparent */
-            } else {
-              document.documentElement.style.setProperty('--avatarBorderColor', avatarBorderColor.value);
-              avatarBorderColor.disabled = false; /* Enable color selector when not transparent */
-            }
-            generateCSS(); /* Update generated CSS */
-            saveSettings(); /* Save current settings */
-          "
-        >
-        <span class="slider"></span>
-      </label>
-        </div>
-        <div class="control-group">
-            <label for="avatarImageURL">Avatar Image URL</label>
-            <input type="url" id="avatarImageURL" placeholder="https://example.com/avatar.jpg" value="https://via.placeholder.com/50">
-        </div>
-        <div class="control-group">
-            <label for="avatarShape">Avatar Shape</label>
-            <select id="avatarShape">
-                <option value="50%">Circle</option>
-                <option value="0%">Square</option>
-            </select>
-        </div>
-    </div>
-</div>
-
-<!-- Icon Settings -->
-<div class="section">
-    <div class="section-title">
-        <span class="toggle-icon">+</span>
-        Icon Settings
-    </div>
-    <div class="section-content">
-        <div class="control-group">
-            <label for="showIcons">Show Microphone and Upload Icons</label>
-            <label class="switch">
-                <input type="checkbox" id="showIcons" checked>
-                <span class="slider"></span>
+        <div class="section-content">
+            <label for="footer-show">Show Footer</label>
+          <label class="switch">
+            <input type="checkbox" id="footer-show" checked>
+            <span class="slider"></span>
+          </label>
+            <br>
+            <label>
+                Footer Text:
+                <input type="text" id="footer-text" value="Developed by Chatbot Builder AI">
+            </label>
+            <br>
+            <label>
+                Footer Text Color:
+                <div class="color-input-group">
+                    <input type="color" id="footer-text-color" value="#000">
+                    <input type="text" id="footerTextColorText" value="#000000" maxlength="7">
+                </div>
+            </label>
+            <br>
+            <label>
+                Footer Font Size (px):
+                <input type="number" id="footer-font-size" value="12">
+            </label>
+            <br>
+            <label>
+                Footer Font Family:
+                <select id="footer-font-family">
+                    <option value="sans-serif" selected>Sans-serif</option>
+                    <option value="serif">Serif</option>
+                    <option value="monospace">Monospace</option>
+                </select>
+            </label>
+            <br>
+            <label>
+                Footer Font Weight:
+                <select id="footer-font-weight">
+                    <option value="normal" selected>Normal</option>
+                    <option value="bold">Bold</option>
+                    <option value="lighter">Lighter</option>
+                </select>
             </label>
         </div>
-        <div class="control-group">
-            <label>Mic and Upload Icons Color:</label>
-            <div class="color-input-group">
-                <input type="color" id="icon-color" value="#000000">
-                <input type="text" id="iconColorText" value="#000000" maxlength="7">
-            </div>
+      </div>
+      <!-- Generated CSS -->
+      <div class="section">
+        <div class="section-title">
+            <span class="toggle-icon">+</span>
+            Generated CSS
         </div>
-        <div class="control-group">
-            <label>Send Icon Color:</label>
-            <div class="color-input-group">
-                <input type="color" id="icon-color-send" value="#000000">
-                <input type="text" id="iconColorSendText" value="#000000" maxlength="7">
+        <div class="section-content">
+            <textarea id="cssOutput" readonly></textarea>
+            <button class="copy-button" onclick="copyCSS()">Copy CSS</button>
+        </div>
+      </div>
+      <!-- Reset Button -->
+      <button class="reset-button" onclick="resetSettings()">Reset to Default</button>
+    </div>
+    <!-- Preview Area -->
+    <div class="preview">
+        <div class="chat-preview-container">
+            <div class="chat-header">Chat Interface</div>
+            <div class="chat-area">
+                <div class="other-message">
+                    <div class="message-text">Hello! How can I assist you today?</div>
+                </div>
+                <div class="my-message">
+                    <div class="message-text">I have a question about your service.</div>
+                </div>
+            </div>
+            <div class="chat-input">
+                <div class="icon-container">
+                    <i class="fa-solid fa-microphone microphone-icon"></i>
+                    <i class="fa-solid fa-paperclip uploadBtt"></i>
+                </div>
+                <div class="icone-send">
+                    <i class="fa-solid fa-location-arrow"></i>
+                </div>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Type your message...">
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-<!-- Chat Input Settings -->
-<div class="section">
-    <div class="section-title">
-        <span class="toggle-icon">+</span>
-        Chat Input Settings
-    </div>
-    <div class="section-content">
-        <div class="control-group">
-            <label for="chatInputBackgroundType">Chat Input Background Type</label>
-            <select id="chatInputBackgroundType">
-                <option value="solid" selected>Solid</option>
-                <option value="gradient">Gradient</option>
-            </select>
-        </div>
-        <div class="control-group" id="chatInputSolidColorGroup">
-            <label for="chatInputBgSolid">Chat Input Background Color</label>
-            <div class="color-input-group">
-                <input type="color" id="chatInputBgSolid" value="#ffffff">
-                <input type="text" id="chatInputBgSolidText" value="#ffffff" maxlength="7">
-            </div>
-        </div>
-        <div class="control-group" id="chatInputGradientGroup" style="display: none;">
-            <label for="chatInputBgGradientStart">Chat Input Gradient Start Color</label>
-            <div class="color-input-group">
-                <input type="color" id="chatInputBgGradientStart" value="#ffffff">
-                <input type="text" id="chatInputBgGradientStartText" value="#ffffff" maxlength="7">
-            </div>
-            <label for="chatInputBgGradientEnd">Chat Input Gradient End Color</label>
-            <div class="color-input-group">
-                <input type="color" id="chatInputBgGradientEnd" value="#f1f1f1">
-                <input type="text" id="chatInputBgGradientEndText" value="#f1f1f1" maxlength="7">
-            </div>
-            <label for="chatInputBgGradientDirection">Gradient Direction</label>
-            <select id="chatInputBgGradientDirection">
-                <option value="to right" selected>To Right</option>
-                <option value="to bottom">To Bottom</option>
-                <option value="to left">To Left</option>
-                <option value="to top">To Top</option>
-                <option value="45deg">45°</option>
-                <option value="135deg">135°</option>
-            </select>
-        </div>
-        <div class="control-group">
-            <label for="chatInputTextFieldBg">Text Field Background Color</label>
-            <div class="color-input-group">
-                <input type="color" id="chatInputTextFieldBg" value="#f1f1f1">
-                <input type="text" id="chatInputTextFieldBgText" value="#f1f1f1" maxlength="7">
-            </div>
-        </div>
-        <div class="control-group">
-            <label for="chatInputTextFieldTextColor">Text Field Text Color</label>
-            <div class="color-input-group">
-                <input type="color" id="chatInputTextFieldTextColor" value="#333333">
-                <input type="text" id="chatInputTextFieldTextColorText" value="#333333" maxlength="7">
-            </div>
-        </div>
-        <div class="control-group">
-            <label for="chatInputCornerStyle">Chat Input Corner Style</label>
-            <select id="chatInputCornerStyle">
-                <option value="0px">Straight</option>
-                <option value="18px" selected>Rounded</option>
-            </select>
-        </div>
-    </div>
-</div>
-
-<!-- Footer Settings -->
-<div class="section">
-    <div class="section-title">
-        <span class="toggle-icon">+</span>
-        Footer Settings
-    </div>
-    <div class="section-content">
-        <label for="footer-show">Show Footer</label>
-      <label class="switch">
-        <input type="checkbox" id="footer-show" checked>
-        <span class="slider"></span>
-      </label>
-        <br>
-        <label>
-            Footer Text:
-            <input type="text" id="footer-text" value="Developed by Chatbot Builder AI">
-        </label>
-        <br>
-        <label>
-            Footer Text Color:
-            <div class="color-input-group">
-                <input type="color" id="footer-text-color" value="#000">
-                <input type="text" id="footerTextColorText" value="#000000" maxlength="7">
-            </div>
-        </label>
-        <br>
-        <label>
-            Footer Font Size (px):
-            <input type="number" id="footer-font-size" value="12">
-        </label>
-        <br>
-        <label>
-            Footer Font Family:
-            <select id="footer-font-family">
-                <option value="sans-serif" selected>Sans-serif</option>
-                <option value="serif">Serif</option>
-                <option value="monospace">Monospace</option>
-            </select>
-        </label>
-        <br>
-        <label>
-            Footer Font Weight:
-            <select id="footer-font-weight">
-                <option value="normal" selected>Normal</option>
-                <option value="bold">Bold</option>
-                <option value="lighter">Lighter</option>
-            </select>
-        </label>
-    </div>
-</div>
-
-<!-- Generated CSS -->
-<div class="section">
-    <div class="section-title">
-        <span class="toggle-icon">+</span>
-        Generated CSS
-    </div>
-    <div class="section-content">
-        <textarea id="cssOutput" readonly></textarea>
-        <button class="copy-button" onclick="copyCSS()">Copy CSS</button>
-    </div>
-</div>
-
-<!-- Reset Button -->
-<button class="reset-button" onclick="resetSettings()">Reset to Default</button>
-</div>
-
-<!-- Preview Area -->
-<div class="preview">
-    <div class="chat-preview-container">
-        <div class="chat-header">Chat Interface</div>
-        <div class="chat-area">
-            <!-- Example Messages -->
-            <div class="other-message">
-                <div class="message-text">Hello! How can I assist you today?</div>
-            </div>
-            <div class="my-message">
-                <div class="message-text">I have a question about your service.</div>
-            </div>
-        </div>
-        <div class="chat-input">
-            <!-- Icons -->
-            <div class="icon-container">
-                <i class="fa-solid fa-microphone"></i>
-                <i class="fa-solid fa-paperclip"></i>
-            </div>
-            <div class="icone-send">
-                <i class="fa-solid fa-location-arrow"></i>
-            </div>
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Type your message...">
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Success Message -->
-<div id="successMessage" class="success-message">CSS copied to clipboard!</div>
-</div>
-<!-- Success Message -->
-<div id="successMessage" class="success-message">CSS copied to clipboard!</div>
+    <div id="successMessage" class="success-message">CSS copied to clipboard!</div>
 </div>
 
 <script>
-// Function to generate CSS based on current settings
+const footerSettings = {
+    showFooter: true,
+    footerText: 'Developed by Chatbot Builder AI',
+    footerTextColor: '#000000',
+    footerFontSize: 12,
+    footerFontFamily: 'sans-serif',
+    footerFontWeight: 'normal',
+};
+
 function generateCSS() {
     const rootStyle = getComputedStyle(document.documentElement);
-    let css = `:root{
-        --primaryColor:${rootStyle.getPropertyValue('--primaryColor').trim()};
-        --secondaryColor:${rootStyle.getPropertyValue('--secondaryColor').trim()};
-        --fontFamily:${rootStyle.getPropertyValue('--fontFamily').trim()};
-        --fontWeight:${rootStyle.getPropertyValue('--fontWeight').trim()};
-        --headerTextSize:${rootStyle.getPropertyValue('--headerTextSize').trim()};
-        --headerTextColor:${rootStyle.getPropertyValue('--headerTextColor').trim()};
-        --headerBackgroundLayers:${rootStyle.getPropertyValue('--headerBackgroundLayers').trim()};
-        --headerHeight:${rootStyle.getPropertyValue('--headerHeight').trim()};
-        --headerTextAlign:${rootStyle.getPropertyValue('--headerTextAlign').trim()};
-        --cornerStyle:${rootStyle.getPropertyValue('--cornerStyle').trim()};
-        --headerPaddingLeft:${rootStyle.getPropertyValue('--headerPaddingLeft').trim()};
-        --chatAreaBackgroundColor:${rootStyle.getPropertyValue('--chatAreaBackgroundColor').trim()};
-        --chatAreaGradient:${rootStyle.getPropertyValue('--chatAreaGradient').trim()};
-        --chatAreaBackgroundImage:${rootStyle.getPropertyValue('--chatAreaBackgroundImage').trim()};
-        --chatAreaBackgroundPosition:${rootStyle.getPropertyValue('--chatAreaBackgroundPosition').trim()};
-        --chatAreaBackgroundRepeat:${rootStyle.getPropertyValue('--chatAreaBackgroundRepeat').trim()};
-        --chatAreaBackgroundSize:${rootStyle.getPropertyValue('--chatAreaBackgroundSize').trim()};
-        --messageTextSize:${rootStyle.getPropertyValue('--messageTextSize').trim()};
-        --messageCornerStyle:${rootStyle.getPropertyValue('--messageCornerStyle').trim()};
-        --botMessageTextColor:${rootStyle.getPropertyValue('--botMessageTextColor').trim()};
-        --botMessageBg:${rootStyle.getPropertyValue('--botMessageBg').trim()};
-        --userMessageTextColor:${rootStyle.getPropertyValue('--userMessageTextColor').trim()};
-        --userMessageBg:${rootStyle.getPropertyValue('--userMessageBg').trim()};
-        --chatInputBackground:${rootStyle.getPropertyValue('--chatInputBackground').trim()};
-        --chatInputTextFieldBg:${rootStyle.getPropertyValue('--chatInputTextFieldBg').trim()};
-        --chatInputTextFieldTextColor:${rootStyle.getPropertyValue('--chatInputTextFieldTextColor').trim()};
-        --chatInputBorderRadius:${rootStyle.getPropertyValue('--chatInputBorderRadius').trim()};
-        --iconsDisplay:${rootStyle.getPropertyValue('--iconsDisplay').trim()};
-        --iconsColor:${rootStyle.getPropertyValue('--iconsColor').trim()};
-        --iconsColorSend:${rootStyle.getPropertyValue('--iconsColorSend').trim()};
-        --buttonTextSize:${rootStyle.getPropertyValue('--buttonTextSize').trim()};
-        --buttonFontWeight:${rootStyle.getPropertyValue('--buttonFontWeight').trim()};
-        --buttonPadding:${rootStyle.getPropertyValue('--buttonPadding').trim()};
-        --chatInputHeight:${rootStyle.getPropertyValue('--chatInputHeight').trim()};
-        --avatarSize:${rootStyle.getPropertyValue('--avatarSize').trim()};
-        --avatarBorderColor:${rootStyle.getPropertyValue('--avatarBorderColor').trim()};
-        --avatarImageURL:${rootStyle.getPropertyValue('--avatarImageURL').trim()};
-        --avatarDisplay:${rootStyle.getPropertyValue('--avatarDisplay').trim()};
-        --avatarShape:${rootStyle.getPropertyValue('--avatarShape').trim()};
-        --otherMessagePaddingLeft:${rootStyle.getPropertyValue('--otherMessagePaddingLeft').trim()};
-    }`;
+    let css = ':root{'+
+        '--primaryColor:'+rootStyle.getPropertyValue('--primaryColor').trim()+';'+
+        '--secondaryColor:'+rootStyle.getPropertyValue('--secondaryColor').trim()+';'+
+        '--fontFamily:'+rootStyle.getPropertyValue('--fontFamily').trim()+';'+
+        '--fontWeight:'+rootStyle.getPropertyValue('--fontWeight').trim()+';'+
+        '--headerTextSize:'+rootStyle.getPropertyValue('--headerTextSize').trim()+';'+
+        '--headerTextColor:'+rootStyle.getPropertyValue('--headerTextColor').trim()+';'+
+        '--headerBackgroundLayers:'+rootStyle.getPropertyValue('--headerBackgroundLayers').trim()+';'+
+        '--headerHeight:'+rootStyle.getPropertyValue('--headerHeight').trim()+';'+
+        '--headerTextAlign:'+rootStyle.getPropertyValue('--headerTextAlign').trim()+';'+
+        '--cornerStyle:'+rootStyle.getPropertyValue('--cornerStyle').trim()+';'+
+        '--headerPaddingLeft:'+rootStyle.getPropertyValue('--headerPaddingLeft').trim()+';'+
+        '--chatAreaBackgroundColor:'+rootStyle.getPropertyValue('--chatAreaBackgroundColor').trim()+';'+
+        '--chatAreaGradient:'+rootStyle.getPropertyValue('--chatAreaGradient').trim()+';'+
+        '--chatAreaBackgroundImage:'+rootStyle.getPropertyValue('--chatAreaBackgroundImage').trim()+';'+
+        '--chatAreaBackgroundPosition:'+rootStyle.getPropertyValue('--chatAreaBackgroundPosition').trim()+';'+
+        '--chatAreaBackgroundRepeat:'+rootStyle.getPropertyValue('--chatAreaBackgroundRepeat').trim()+';'+
+        '--chatAreaBackgroundSize:'+rootStyle.getPropertyValue('--chatAreaBackgroundSize').trim()+';'+
+        '--messageTextSize:'+rootStyle.getPropertyValue('--messageTextSize').trim()+';'+
+        '--userMessageCornerStyle:'+rootStyle.getPropertyValue('--userMessageCornerStyle').trim()+';'+
+        '--botMessageCornerStyle:'+rootStyle.getPropertyValue('--botMessageCornerStyle').trim()+';'+
+        '--botMessageTextColor:'+rootStyle.getPropertyValue('--botMessageTextColor').trim()+';'+
+        '--botMessageBg:'+rootStyle.getPropertyValue('--botMessageBg').trim()+';'+
+        '--userMessageTextColor:'+rootStyle.getPropertyValue('--userMessageTextColor').trim()+';'+
+        '--userMessageBg:'+rootStyle.getPropertyValue('--userMessageBg').trim()+';'+
+        '--chatInputBackground:'+rootStyle.getPropertyValue('--chatInputBackground').trim()+';'+
+        '--chatInputTextFieldBg:'+rootStyle.getPropertyValue('--chatInputTextFieldBg').trim()+';'+
+        '--chatInputTextFieldTextColor:'+rootStyle.getPropertyValue('--chatInputTextFieldTextColor').trim()+';'+
+        '--chatInputBorderRadius:'+rootStyle.getPropertyValue('--chatInputBorderRadius').trim()+';'+
+        '--iconsDisplay:'+rootStyle.getPropertyValue('--iconsDisplay').trim()+';'+
+        '--iconsColor:'+rootStyle.getPropertyValue('--iconsColor').trim()+';'+
+        '--iconsColorSend:'+rootStyle.getPropertyValue('--iconsColorSend').trim()+';'+
+        '--buttonTextSize:'+rootStyle.getPropertyValue('--buttonTextSize').trim()+';'+
+        '--buttonFontWeight:'+rootStyle.getPropertyValue('--buttonFontWeight').trim()+';'+
+        '--buttonPadding:'+rootStyle.getPropertyValue('--buttonPadding').trim()+';'+
+        '--chatInputHeight:'+rootStyle.getPropertyValue('--chatInputHeight').trim()+';'+
+        '--avatarSize:'+rootStyle.getPropertyValue('--avatarSize').trim()+';'+
+        '--avatarBorderColor:'+rootStyle.getPropertyValue('--avatarBorderColor').trim()+';'+
+        '--avatarBorderThickness:'+rootStyle.getPropertyValue('--avatarBorderThickness').trim()+';'+
+        '--avatarImageURL:'+rootStyle.getPropertyValue('--avatarImageURL').trim()+';'+
+        '--avatarDisplay:'+rootStyle.getPropertyValue('--avatarDisplay').trim()+';'+
+        '--avatarShape:'+rootStyle.getPropertyValue('--avatarShape').trim()+';'+
+        '--otherMessagePaddingLeft:'+rootStyle.getPropertyValue('--otherMessagePaddingLeft').trim()+';'+
+        '--userMessageBorderColor:'+rootStyle.getPropertyValue('--userMessageBorderColor').trim()+';'+
+        '--userMessageBorderThickness:'+rootStyle.getPropertyValue('--userMessageBorderThickness').trim()+';'+
+        '--botMessageBorderColor:'+rootStyle.getPropertyValue('--botMessageBorderColor').trim()+';'+
+        '--botMessageBorderThickness:'+rootStyle.getPropertyValue('--botMessageBorderThickness').trim()+';}';
 
-    // Include Footer Settings if Footer is Enabled
     if (footerSettings && footerSettings.showFooter) {
-        css += `
-        .chat-input:before {
-            content: "${footerSettings.footerText}";
-            position: absolute;
-            bottom: 1px;
-            color: ${footerSettings.footerTextColor};
-            font-size: ${footerSettings.footerFontSize}px;
-            font-family: ${footerSettings.footerFontFamily};
-            font-weight: ${footerSettings.footerFontWeight};
-            padding: 1px 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap;
-        }
-        .d-flex.align-items-center.w-100 {
-            padding-bottom: 2vh;
-        }`;
+        css += '.chat-input:before{content:"'+footerSettings.footerText+'";position:absolute;bottom:1px;color:'+footerSettings.footerTextColor+';font-size:'+footerSettings.footerFontSize+'px;font-family:'+footerSettings.footerFontFamily+';font-weight:'+footerSettings.footerFontWeight+';padding:1px 5px;left:50%;transform:translateX(-50%);white-space:nowrap;}';
+        css += '.d-flex.align-items-center.w-100{padding-bottom:2vh;}';
     }
 
-    // Additional Styles
-    css += `
-    pre {
-        color: var(--botMessageTextColor);
-        line-height: 1.5;
-        padding: 10px;
-        font-weight: var(--buttonFontWeight);
-        font-size: var(--messageTextSize);
-        font-family: var(--fontFamily);
+    css += 'pre{color:var(--botMessageTextColor);line-height:1.5;padding:10px;font-weight:var(--buttonFontWeight);font-size:var(--messageTextSize);font-family:var(--fontFamily);}';
+    css += '.chat-header{font-size:var(--headerTextSize);color:var(--headerTextColor);background:var(--headerBackgroundLayers);height:var(--headerHeight);text-align:var(--headerTextAlign);display:flex;align-items:center;justify-content:var(--headerTextAlign);font-family:var(--fontFamily);border-top-left-radius:var(--cornerStyle);border-top-right-radius:var(--cornerStyle);padding-left:var(--headerPaddingLeft);}';
+    css += '.chat-input path{fill:var(--iconsColor)!important;}';
+    css += '.chat-area{height:calc(92% - var(--headerHeight));position:absolute;top:var(--headerHeight);flex:1;padding:0;overflow-y:auto;line-height:1.5;font-family:var(--fontFamily);background-color:var(--chatAreaBackgroundColor);background-image:var(--chatAreaGradient),var(--chatAreaBackgroundImage);background-position:var(--chatAreaBackgroundPosition);background-repeat:var(--chatAreaBackgroundRepeat);background-size:var(--chatAreaBackgroundSize);}';
+    css += '.other-message{position:relative;margin-bottom:10px;padding-left:var(--otherMessagePaddingLeft);}';
+    css += '.other-message:before{content:"";display:var(--avatarDisplay);position:absolute;top:0;left:0;width:var(--avatarSize);height:var(--avatarSize);background-image:var(--avatarImageURL);background-size:cover;background-repeat:no-repeat;border-radius:var(--avatarShape);border:var(--avatarBorderThickness) solid var(--avatarBorderColor);}';
+    css += '.other-message .message-text{background-color:var(--botMessageBg);color:var(--botMessageTextColor);font-size:var(--messageTextSize);border-radius:var(--botMessageCornerStyle);word-wrap:break-word;font-family:var(--fontFamily);margin-bottom:5px;padding:10px 15px;border:var(--botMessageBorderThickness) solid var(--botMessageBorderColor);}';
+    css += '.other-message .message-text *{color:var(--botMessageTextColor);}';
+    css += '.my-message{padding-right:0;margin-bottom:10px;position:relative;}';
+    css += '.my-message .message-text{background-color:var(--userMessageBg)!important;color:var(--userMessageTextColor);font-size:var(--messageTextSize);border-radius:var(--userMessageCornerStyle);word-wrap:break-word;font-family:var(--fontFamily);margin-bottom:5px;margin-top:5vh;padding:10px 15px;border:var(--userMessageBorderThickness) solid var(--userMessageBorderColor);}';
+    css += '.my-message .message-text *{color:var(--userMessageTextColor)!important;}';
+    css += '.message-text *{font-family:inherit;}';
+    css += '.chat-input{height:var(--chatInputHeight);padding:20px;background:var(--chatInputBackground);display:flex;align-items:center;width:100%;box-sizing:border-box;border-top:0 solid #e0e0e0;font-family:var(--fontFamily);}';
+    css += '.chat-input .input-group{flex:1;border-radius:var(--chatInputBorderRadius)!important;background-color:var(--chatInputTextFieldBg)!important;overflow:hidden;position:relative;display:flex;}';
+    css += '.chat-input input{width:100%;padding:10px;border:none;background-color:var(--chatInputTextFieldBg);color:var(--chatInputTextFieldTextColor);font-size:14px;outline:none;box-sizing:border-box;flex:1;}';
+    css += '.chat-input .form-control{background:var(--chatInputTextFieldBg)!important;}';
+    css += 'button.btn.uploadBtt.bg-light-hover:hover{background:#ffffff42;filter:invert(0.7);}';
+    css += 'path#path2{fill:var(--iconsColorSend)!important;}';
+    css += '.bg-light-hover:hover{background-color:unset!important;}';
+    css += '.btn-outline-primary{color:var(--botMessageTextColor)!important;border-color:var(--primaryColor)!important;background-color:var(--botMessageBg);}';
+
+    const showIcons = document.getElementById('showIcons').checked;
+    if (!showIcons) {
+        css += '.uploadBtt,.microphone-icon{display:none!important;}';
     }
-    .chat-header {
-        font-size: var(--headerTextSize);
-        color: var(--headerTextColor);
-        background: var(--headerBackgroundLayers);
-        height: var(--headerHeight);
-        text-align: var(--headerTextAlign);
-        display: flex;
-        align-items: center;
-        justify-content: var(--headerTextAlign);
-        font-family: var(--fontFamily);
-        border-top-left-radius: var(--cornerStyle);
-        border-top-right-radius: var(--cornerStyle);
-        padding-left: var(--headerPaddingLeft);
-    }
-    .chat-input path {
-        fill: var(--iconsColor) !important; /* Control the color of icons */
-    }
-    .chat-area {
-        height: calc(92% - var(--headerHeight));
-        position: absolute;
-        top: var(--headerHeight);
-        flex: 1;
-        padding: 0px;
-        overflow-y: auto;
-        line-height: 1.5;
-        font-family: var(--fontFamily);
-        background-color: var(--chatAreaBackgroundColor);
-        background-image: var(--chatAreaGradient), var(--chatAreaBackgroundImage);
-        background-position: var(--chatAreaBackgroundPosition);
-        background-repeat: var(--chatAreaBackgroundRepeat);
-        background-size: var(--chatAreaBackgroundSize);
-        }
-    .other-message {
-        position: relative;
-        margin-bottom: 10px;
-        padding-left: var(--otherMessagePaddingLeft);
-    }
-    .other-message:before {
-        content: "";
-        display: var(--avatarDisplay);
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: var(--avatarSize);
-        height: var(--avatarSize);
-        background-image: var(--avatarImageURL);
-        background-size: cover;
-        background-repeat: no-repeat;
-        border-radius: var(--avatarShape);
-        border: 3px solid var(--avatarBorderColor);
-    }
-    .other-message .message-text {
-        background-color: var(--botMessageBg);
-        color: var(--botMessageTextColor);
-        font-size: var(--messageTextSize);
-        border-radius: var(--messageCornerStyle);
-        word-wrap: break-word;
-        font-family: var(--fontFamily);
-        margin-bottom: 5px;
-        padding: 0px 2px;
-    }
-    .other-message .message-text * {
-        color: var(--botMessageTextColor);
-    }
-    .my-message {
-        padding-right: 0;
-        margin-bottom: 10px;
-        position: relative;
-    }
-    .my-message .message-text {
-        background-color: var(--userMessageBg) !important;
-        color: var(--userMessageTextColor);
-        font-size: var(--messageTextSize);
-        border-radius: var(--messageCornerStyle);
-        word-wrap: break-word;
-        font-family: var(--fontFamily);
-        margin-bottom: 5px;
-        margin-top: 5vh;
-        padding: 0px 3px;
-    }
-    .my-message .message-text * {
-        color: var(--userMessageTextColor) !important;
-    }
-    .message-text * {
-        font-family: inherit;
-    }
-    .chat-input {
-        height: var(--chatInputHeight);
-        padding: 20px;
-        background: var(--chatInputBackground);
-        display: flex;
-        align-items: center;
-        width: 100%;
-        box-sizing: border-box;
-        border-top: 0px solid #e0e0e0;
-        font-family: var(--fontFamily);
-    }
-    .chat-input .input-group {
-        flex: 1;
-        border-radius: var(--chatInputBorderRadius) !important;
-        background-color: var(--chatInputTextFieldBg) !important;
-        overflow: hidden;
-        position: relative;
-        display: flex;
-    }
-    .chat-input input {
-        width: 100%;
-        padding: 10px;
-        border: none;
-        background-color: var(--chatInputTextFieldBg);
-        color: var(--chatInputTextFieldTextColor);
-        font-size: 14px;
-        outline: none;
-        box-sizing: border-box;
-        flex: 1;
-    }
-    .chat-input .form-control {
-        background: var(--chatInputTextFieldBg) !important;
-    }
-    button.btn.uploadBtt.bg-light-hover:hover {
-        background: #ffffff42;
-        filter: invert(0.7);
-    }
-    path#path2 {
-        fill: var(--iconsColorSend) !important;
-    }
-    .bg-light-hover:hover {
-        background-color: unset !important;
-    }
-    `;
+
+    // Minify whitespace
+    css = css.replace(/\n/g,' ').replace(/\s\s+/g,' ');
 
     document.getElementById('cssOutput').value = css.trim();
 }
 
-// Function to update the preview based on control inputs
 function updatePreview() {
     const root = document.documentElement.style;
 
-    // Header Settings
     const headerTextSize = document.getElementById('headerTextSize').value + 'px';
     const headerTextColor = document.getElementById('headerTextColor').value;
     const headerHeightValue = document.getElementById('headerHeight').value;
@@ -1270,10 +1143,8 @@ function updatePreview() {
     root.setProperty('--cornerStyle', cornerStyle);
     root.setProperty('--fontFamily', fontFamily);
 
-    // Update Header Text
     document.querySelector('.chat-header').textContent = headerText;
 
-    // Update font family and weight in preview elements
     document.querySelectorAll('.preview, .chat-preview-container, .chat-header, .chat-area, .chat-input, .message-text, pre, .card-button').forEach(el => {
         el.style.fontFamily = root.getPropertyValue('--fontFamily').trim();
         el.style.fontWeight = 'bold';
@@ -1287,10 +1158,9 @@ function updatePreview() {
         const headerBgGradientStart = document.getElementById('headerBgGradientStart').value;
         const headerBgGradientEnd = document.getElementById('headerBgGradientEnd').value;
         const headerBgGradientDirection = document.getElementById('headerBgGradientDirection').value;
-        headerBackgroundLayer = `linear-gradient(${headerBgGradientDirection}, ${headerBgGradientStart}, ${headerBgGradientEnd})`;
+        headerBackgroundLayer = 'linear-gradient('+headerBgGradientDirection+','+headerBgGradientStart+','+headerBgGradientEnd+')';
     }
 
-    // Header Logo Settings
     const headerLogoURL = document.getElementById('headerLogoURL').value;
     const headerLogoWidth = document.getElementById('headerLogoWidth').value || '40';
     const headerLogoAlignment = document.getElementById('headerLogoAlignment').value || 'left';
@@ -1304,17 +1174,16 @@ function updatePreview() {
 
         let positionX = '';
         if (headerLogoAlignment === 'left') {
-            positionX = `calc(${headerLogoOffsetX}px)`;
+            positionX = 'calc('+headerLogoOffsetX+'px)';
         } else if (headerLogoAlignment === 'center') {
-            positionX = `calc(50% + ${headerLogoOffsetX}px - ${headerLogoWidth / 2}px)`;
+            positionX = 'calc(50% + '+headerLogoOffsetX+'px - '+(headerLogoWidth/2)+'px)';
         } else if (headerLogoAlignment === 'right') {
-            positionX = `calc(100% - ${headerLogoWidth}px - ${headerLogoOffsetX}px)`;
+            positionX = 'calc(100% - '+headerLogoWidth+'px - '+headerLogoOffsetX+'px)';
         }
-
-        const positionY = `${headerLogoOffsetY}px`;
+        const positionY = headerLogoOffsetY+'px';
         const headerLogoWidthPx = headerLogoWidth + 'px';
 
-        headerBackgroundLayers = `url('${headerLogoURL}') ${positionX} ${positionY} / ${headerLogoWidthPx} no-repeat, ${headerBackgroundLayer}`;
+        headerBackgroundLayers = 'url("'+headerLogoURL+'") '+positionX+' '+positionY+' / '+headerLogoWidthPx+' no-repeat, '+headerBackgroundLayer;
     } else {
         document.getElementById('headerLogoSizeGroup').style.display = 'none';
         document.getElementById('headerLogoPositionGroup').style.display = 'none';
@@ -1323,9 +1192,7 @@ function updatePreview() {
     }
     root.setProperty('--headerBackgroundLayers', headerBackgroundLayers);
 
-    // Chat Area Settings
     const chatAreaBackgroundType = document.getElementById('chatAreaBackgroundType').value;
-
     if (chatAreaBackgroundType === 'solid') {
         const chatAreaBgSolid = document.getElementById('chatAreaBgSolid').value;
         root.setProperty('--chatAreaBackgroundColor', chatAreaBgSolid);
@@ -1336,7 +1203,7 @@ function updatePreview() {
         const chatAreaBgGradientEnd = document.getElementById('chatAreaBgGradientEnd').value;
         const chatAreaBgGradientDirection = document.getElementById('chatAreaBgGradientDirection').value;
         root.setProperty('--chatAreaBackgroundColor', 'transparent');
-        root.setProperty('--chatAreaBackgroundImage', `linear-gradient(${chatAreaBgGradientDirection}, ${chatAreaBgGradientStart}, ${chatAreaBgGradientEnd})`);
+        root.setProperty('--chatAreaBackgroundImage', 'linear-gradient('+chatAreaBgGradientDirection+','+chatAreaBgGradientStart+','+chatAreaBgGradientEnd+')');
         root.setProperty('--chatAreaBackgroundPosition', 'center');
         root.setProperty('--chatAreaBackgroundRepeat', 'no-repeat');
         root.setProperty('--chatAreaBackgroundSize', 'cover');
@@ -1345,82 +1212,101 @@ function updatePreview() {
         const chatAreaBgImageURL = document.getElementById('chatAreaBgImageURL').value;
         const chatAreaBgSize = document.getElementById('chatAreaBgSize').value;
         const chatAreaBgRepeat = document.getElementById('chatAreaBgRepeat').value;
-
         const gradientSelector = document.getElementById('gradientSelector').value;
         const slidergradientTransparency = document.getElementById('slidergradientTransparency').value;
-
         if (chatAreaBgImageURL) {
             root.setProperty('--chatAreaBackgroundColor', 'transparent');
-            root.setProperty('--chatAreaBackgroundImage', `url('${chatAreaBgImageURL}')`);
+            root.setProperty('--chatAreaBackgroundImage', 'url("'+chatAreaBgImageURL+'")');
             root.setProperty('--chatAreaBackgroundSize', chatAreaBgSize);
             root.setProperty('--chatAreaBackgroundRepeat', chatAreaBgRepeat);
             root.setProperty('--chatAreaBackgroundPosition', 'center');
 
-            // Adjust transparency based on slider value
             const gradientOpacity = slidergradientTransparency / 100;
-
             let gradientColor;
             if (gradientSelector === 'light') {
-                gradientColor = `linear-gradient(to bottom, rgba(255, 255, 255, ${gradientOpacity}), rgba(255, 255, 255, ${gradientOpacity}))`;
+                gradientColor = 'linear-gradient(to bottom, rgba(255, 255, 255, '+gradientOpacity+'), rgba(255, 255, 255, '+gradientOpacity+'))';
             } else if (gradientSelector === 'dark') {
-                gradientColor = `linear-gradient(to bottom, rgba(0, 0, 0, ${gradientOpacity}), rgba(0, 0, 0, ${gradientOpacity}))`;
+                gradientColor = 'linear-gradient(to bottom, rgba(0, 0, 0, '+gradientOpacity+'), rgba(0, 0, 0, '+gradientOpacity+'))';
             } else {
                 gradientColor = 'none';
             }
-
             root.setProperty('--chatAreaGradient', gradientColor);
         }
     }
 
-    // Message Settings
     const messageTextSizeValue = document.getElementById('messageTextSize').value;
     const messageTextSize = messageTextSizeValue + 'px';
-    const messageCornerStyle = document.getElementById('messageCornerStyle').value;
+    root.setProperty('--messageTextSize', messageTextSize);
+    root.setProperty('--buttonTextSize', messageTextSize);
+    const botMessageCornerStyleSelect = document.getElementById('botMessageCornerStyleSelect').value;
+    const userMessageCornerStyleSelect = document.getElementById('userMessageCornerStyleSelect').value;
+
+    let botCornerValue = botMessageCornerStyleSelect;
+    if (botMessageCornerStyleSelect === 'custom') {
+        const tl = document.getElementById('customBotMessageCornerTopLeft').value;
+        const tr = document.getElementById('customBotMessageCornerTopRight').value;
+        const br = document.getElementById('customBotMessageCornerBottomRight').value;
+        const bl = document.getElementById('customBotMessageCornerBottomLeft').value;
+        botCornerValue = tl+' '+tr+' '+br+' '+bl;
+    }
+    root.setProperty('--botMessageCornerStyle', botCornerValue);
+
+    let userCornerValue = userMessageCornerStyleSelect;
+    if (userMessageCornerStyleSelect === 'custom') {
+        const tl = document.getElementById('customUserMessageCornerTopLeft').value;
+        const tr = document.getElementById('customUserMessageCornerTopRight').value;
+        const br = document.getElementById('customUserMessageCornerBottomRight').value;
+        const bl = document.getElementById('customUserMessageCornerBottomLeft').value;
+        userCornerValue = tl+' '+tr+' '+br+' '+bl;
+    }
+    root.setProperty('--userMessageCornerStyle', userCornerValue);
+
     const botMessageTextColor = document.getElementById('botMessageTextColor').value;
     const botMessageBg = document.getElementById('botMessageBg').value;
     const userMessageTextColor = document.getElementById('userMessageTextColor').value;
     const userMessageBg = document.getElementById('userMessageBg').value;
-
-    root.setProperty('--messageTextSize', messageTextSize);
-    root.setProperty('--buttonTextSize', messageTextSize); // Update button text size
-    root.setProperty('--messageCornerStyle', messageCornerStyle);
     root.setProperty('--botMessageTextColor', botMessageTextColor);
     root.setProperty('--botMessageBg', botMessageBg);
     root.setProperty('--userMessageTextColor', userMessageTextColor);
     root.setProperty('--userMessageBg', userMessageBg);
+    root.setProperty('--fontWeight', 'bold');
 
-    // Font Weight
-    root.setProperty('--fontWeight', 'bold'); // Assuming bold as per your instruction
+    const botMessageBorderColor = document.getElementById('botMessageBorderColor').value;
+    const botMessageBorderThickness = document.getElementById('botMessageBorderThickness').value + 'px';
+    root.setProperty('--botMessageBorderColor', botMessageBorderColor);
+    root.setProperty('--botMessageBorderThickness', botMessageBorderThickness);
 
-    // Avatar Settings
+    const userMessageBorderColor = document.getElementById('userMessageBorderColor').value;
+    const userMessageBorderThickness = document.getElementById('userMessageBorderThickness').value + 'px';
+    root.setProperty('--userMessageBorderColor', userMessageBorderColor);
+    root.setProperty('--userMessageBorderThickness', userMessageBorderThickness);
+
     const showAvatar = document.getElementById('showAvatar').checked;
     root.setProperty('--avatarDisplay', showAvatar ? 'inline-block' : 'none');
     root.setProperty('--avatarSize', document.getElementById('avatarSize').value + 'px');
     const avatarBorderColor = document.getElementById('avatarBorderColor').value;
+    const avatarBorderThickness = document.getElementById('avatarBorderThickness').value + 'px';
     const avatarBorderTransparent = document.getElementById('avatarBorderTransparent').checked;
     root.setProperty('--avatarBorderColor', avatarBorderTransparent ? 'transparent' : avatarBorderColor);
+    root.setProperty('--avatarBorderThickness', avatarBorderThickness);
     const avatarURL = document.getElementById('avatarImageURL').value;
-    root.setProperty('--avatarImageURL', avatarURL ? `url("${avatarURL}")` : 'none');
+    root.setProperty('--avatarImageURL', avatarURL ? 'url("'+avatarURL+'")' : 'none');
     root.setProperty('--avatarShape', document.getElementById('avatarShape').value);
 
-    // Adjust other-message padding based on avatar visibility
     if (showAvatar) {
         const avatarSizeValue = document.getElementById('avatarSize').value;
-        root.setProperty('--otherMessagePaddingLeft', `calc(${avatarSizeValue}px + 10px)`);
+        root.setProperty('--otherMessagePaddingLeft', 'calc('+avatarSizeValue+'px + 10px)');
     } else {
         root.setProperty('--otherMessagePaddingLeft', '0px');
     }
 
-    // Icon Settings
     const showIcons = document.getElementById('showIcons').checked;
     const iconColor = document.getElementById('icon-color').value;
     const iconColorSend = document.getElementById('icon-color-send').value;
-
     root.setProperty('--iconsDisplay', showIcons ? 'inline-block' : 'none');
     root.setProperty('--iconsColor', iconColor);
     root.setProperty('--iconsColorSend', iconColorSend);
 
-    // Chat Input Settings
     const chatInputBackgroundType = document.getElementById('chatInputBackgroundType').value;
     const chatInputTextFieldBg = document.getElementById('chatInputTextFieldBg').value;
     const chatInputTextFieldTextColor = document.getElementById('chatInputTextFieldTextColor').value;
@@ -1437,29 +1323,15 @@ function updatePreview() {
         const chatInputBgGradientStart = document.getElementById('chatInputBgGradientStart').value;
         const chatInputBgGradientEnd = document.getElementById('chatInputBgGradientEnd').value;
         const chatInputBgGradientDirection = document.getElementById('chatInputBgGradientDirection').value;
-        root.setProperty('--chatInputBackground', `linear-gradient(${chatInputBgGradientDirection}, ${chatInputBgGradientStart}, ${chatInputBgGradientEnd})`);
+        root.setProperty('--chatInputBackground', 'linear-gradient('+chatInputBgGradientDirection+','+chatInputBgGradientStart+','+chatInputBgGradientEnd+')');
     }
 
-    // Footer Settings
     updateFooterSettings();
-
     generateCSS();
-    saveSettings(); // Save settings after updating
+    saveSettings();
 }
 
-// Footer Settings (Initialize with default values)
-const footerSettings = {
-    showFooter: true,
-    footerText: 'Developed by Chatbot Builder AI',
-    footerTextColor: '#000000',
-    footerFontSize: 10,
-    footerFontFamily: 'sans-serif',
-    footerFontWeight: 'normal',
-};
-
-// Update CSS and Preview for Footer
 function updateFooterSettings() {
-    // Update Footer settings object
     footerSettings.showFooter = document.getElementById('footer-show').checked;
     footerSettings.footerText = document.getElementById('footer-text').value;
     footerSettings.footerTextColor = document.getElementById('footer-text-color').value;
@@ -1467,34 +1339,13 @@ function updateFooterSettings() {
     footerSettings.footerFontFamily = document.getElementById('footer-font-family').value;
     footerSettings.footerFontWeight = document.getElementById('footer-font-weight').value;
 
-    // Generate Footer CSS
     let footerCSS = '';
     if (footerSettings.showFooter) {
-        footerCSS = `
-        .chat-input:before {
-            content: "${footerSettings.footerText}";
-            position: absolute;
-            bottom: 1px;
-            color: ${footerSettings.footerTextColor};
-            font-size: ${footerSettings.footerFontSize}px;
-            font-family: ${footerSettings.footerFontFamily};
-            font-weight: ${footerSettings.footerFontWeight};
-            padding: 1px 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap;
-        }
-        .d-flex.align-items-center.w-100 {
-            padding-bottom: 2vh;
-        }`;
+        footerCSS = '.chat-input:before{content:"'+footerSettings.footerText+'";position:absolute;bottom:1px;color:'+footerSettings.footerTextColor+';font-size:'+footerSettings.footerFontSize+'px;font-family:'+footerSettings.footerFontFamily+';font-weight:'+footerSettings.footerFontWeight+';padding:1px 5px;left:50%;transform:translateX(-50%);white-space:nowrap;}.d-flex.align-items-center.w-100{padding-bottom:2vh;}';
     } else {
-        footerCSS = `
-        .chat-input:before {
-            content: "";
-        }`;
+        footerCSS = '.chat-input:before{content:"";}';
     }
 
-    // Apply the CSS to the preview
     const styleTag = document.getElementById('footerStyles');
     if (styleTag) {
         styleTag.innerHTML = footerCSS.trim();
@@ -1505,11 +1356,9 @@ function updateFooterSettings() {
         document.head.appendChild(newStyleTag);
     }
 
-    // Update Footer CSS Output
     generateCSS();
 }
 
-// Function to save settings to LocalStorage
 function saveSettings() {
     const settings = {};
     document.querySelectorAll('.controls input, .controls select, .controls textarea').forEach(input => {
@@ -1522,7 +1371,6 @@ function saveSettings() {
     localStorage.setItem('chatCustomizationSettings', JSON.stringify(settings));
 }
 
-// Function to load settings from LocalStorage
 function loadSettings() {
     const settings = localStorage.getItem('chatCustomizationSettings');
     if (settings) {
@@ -1536,23 +1384,19 @@ function loadSettings() {
                 }
             }
         });
-
-        // Trigger change events where necessary
         document.getElementById('headerBackgroundType').dispatchEvent(new Event('change'));
         document.getElementById('chatAreaBackgroundType').dispatchEvent(new Event('change'));
         document.getElementById('chatInputBackgroundType').dispatchEvent(new Event('change'));
         document.getElementById('headerLogoURL').dispatchEvent(new Event('input'));
         document.getElementById('avatarBorderTransparent').dispatchEvent(new Event('change'));
         document.getElementById('showIcons').dispatchEvent(new Event('change'));
-
-        // Update footer settings
+        document.getElementById('botMessageCornerStyleSelect').dispatchEvent(new Event('change'));
+        document.getElementById('userMessageCornerStyleSelect').dispatchEvent(new Event('change'));
         updateFooterSettings();
-
         updatePreview();
     }
 }
 
-// Function to reset settings to default
 function resetSettings() {
     if (confirm('Are you sure you want to reset to default settings?')) {
         localStorage.removeItem('chatCustomizationSettings');
@@ -1560,11 +1404,10 @@ function resetSettings() {
     }
 }
 
-// Function to copy CSS to clipboard
 function copyCSS() {
     const cssOutput = document.getElementById('cssOutput');
     cssOutput.select();
-    cssOutput.setSelectionRange(0, 99999); // For mobile devices
+    cssOutput.setSelectionRange(0, 99999);
     document.execCommand('copy');
 
     const successMessage = document.getElementById('successMessage');
@@ -1572,65 +1415,17 @@ function copyCSS() {
     setTimeout(() => { successMessage.style.display = 'none'; }, 2000);
 }
 
-// Event Listeners for Footer Inputs
-document.getElementById('footer-show').addEventListener('change', (e) => {
-    footerSettings.showFooter = e.target.checked;
-    updateFooterSettings();
-    generateCSS();
-    saveSettings();
-});
-
-document.getElementById('footer-text').addEventListener('input', (e) => {
-    footerSettings.footerText = e.target.value;
-    updateFooterSettings();
-    generateCSS();
-    saveSettings();
-});
-
-document.getElementById('footer-text-color').addEventListener('input', (e) => {
-    footerSettings.footerTextColor = e.target.value;
-    updateFooterSettings();
-    generateCSS();
-    saveSettings();
-});
-
-document.getElementById('footer-font-size').addEventListener('input', (e) => {
-    footerSettings.footerFontSize = e.target.value;
-    updateFooterSettings();
-    generateCSS();
-    saveSettings();
-});
-
-document.getElementById('footer-font-family').addEventListener('change', (e) => {
-    footerSettings.footerFontFamily = e.target.value;
-    updateFooterSettings();
-    generateCSS();
-    saveSettings();
-});
-
-document.getElementById('footer-font-weight').addEventListener('change', (e) => {
-    footerSettings.footerFontWeight = e.target.value;
-    updateFooterSettings();
-    generateCSS();
-    saveSettings();
-});
-
-// Synchronize Color Pickers and Text Inputs
 function syncColorInputs(colorPickerId, textInputId) {
     const colorPicker = document.getElementById(colorPickerId);
     const textInput = document.getElementById(textInputId);
-
-    // Update text input when color picker changes
     colorPicker.addEventListener('input', () => {
         textInput.value = colorPicker.value.toUpperCase();
         updatePreview();
     });
-
-    // Update color picker when text input changes
     textInput.addEventListener('input', () => {
         let value = textInput.value.trim().toUpperCase();
         if (!value.startsWith('#')) {
-            value = '#' + value;
+            value = '#'+value;
         }
         if (/^#([0-9A-F]{3}){1,2}$/i.test(value)) {
             colorPicker.value = value;
@@ -1640,7 +1435,6 @@ function syncColorInputs(colorPickerId, textInputId) {
     });
 }
 
-// List of color input pairs
 const colorInputPairs = [
     ['headerTextColor', 'headerTextColorText'],
     ['headerBgSolid', 'headerBgSolidText'],
@@ -1661,21 +1455,20 @@ const colorInputPairs = [
     ['chatInputBgGradientEnd', 'chatInputBgGradientEndText'],
     ['chatInputTextFieldBg', 'chatInputTextFieldBgText'],
     ['chatInputTextFieldTextColor', 'chatInputTextFieldTextColorText'],
-    ['footer-text-color', 'footerTextColorText']
+    ['footer-text-color', 'footerTextColorText'],
+    ['botMessageBorderColor', 'botMessageBorderColorText'],
+    ['userMessageBorderColor', 'userMessageBorderColorText']
 ];
 
-// Initialize synchronization for each pair
 colorInputPairs.forEach(([colorPickerId, textInputId]) => {
     syncColorInputs(colorPickerId, textInputId);
 });
 
-// Event Listeners for All Inputs to Update Preview and Save Settings
 document.querySelectorAll('.controls input, .controls select, .controls textarea').forEach(input => {
     input.addEventListener('input', updatePreview);
     input.addEventListener('change', updatePreview);
 });
 
-// Toggle Header Background Options
 document.getElementById('headerBackgroundType').addEventListener('change', function() {
     const type = this.value;
     if (type === 'solid') {
@@ -1688,7 +1481,6 @@ document.getElementById('headerBackgroundType').addEventListener('change', funct
     updatePreview();
 });
 
-// Toggle Chat Area Background Options
 document.getElementById('chatAreaBackgroundType').addEventListener('change', function() {
     const type = this.value;
     if (type === 'solid') {
@@ -1710,7 +1502,6 @@ document.getElementById('chatAreaBackgroundType').addEventListener('change', fun
     updatePreview();
 });
 
-// Toggle Chat Input Background Options
 document.getElementById('chatInputBackgroundType').addEventListener('change', function() {
     const type = this.value;
     if (type === 'solid') {
@@ -1723,7 +1514,24 @@ document.getElementById('chatInputBackgroundType').addEventListener('change', fu
     updatePreview();
 });
 
-// Toggle Section Content Visibility and ensure only one is open at a time
+document.getElementById('botMessageCornerStyleSelect').addEventListener('change', function() {
+    if(this.value === 'custom') {
+        document.getElementById('customBotMessageCornerGroup').style.display = 'block';
+    } else {
+        document.getElementById('customBotMessageCornerGroup').style.display = 'none';
+    }
+    updatePreview();
+});
+
+document.getElementById('userMessageCornerStyleSelect').addEventListener('change', function() {
+    if(this.value === 'custom') {
+        document.getElementById('customUserMessageCornerGroup').style.display = 'block';
+    } else {
+        document.getElementById('customUserMessageCornerGroup').style.display = 'none';
+    }
+    updatePreview();
+});
+
 document.querySelectorAll('.section-title').forEach(title => {
     title.addEventListener('click', function() {
         const currentlyOpen = document.querySelector('.section-content:not([style*="display: none"])');
@@ -1731,12 +1539,10 @@ document.querySelectorAll('.section-title').forEach(title => {
         const toggleIcon = this.querySelector('.toggle-icon');
 
         if (sectionContent.style.display === 'none' || sectionContent.style.display === '') {
-            // Close the currently open section
             if (currentlyOpen && currentlyOpen !== sectionContent) {
                 currentlyOpen.style.display = 'none';
                 currentlyOpen.previousElementSibling.querySelector('.toggle-icon').textContent = '+';
             }
-            // Open the clicked section
             sectionContent.style.display = 'block';
             toggleIcon.textContent = '-';
         } else {
@@ -1746,13 +1552,11 @@ document.querySelectorAll('.section-title').forEach(title => {
     });
 });
 
-// Show or Hide Icons in Preview
 document.addEventListener("DOMContentLoaded", function () {
     const checkbox = document.getElementById("showIcons");
     const iconContainer = document.querySelector(".icon-container");
     const chatInputGroup = document.querySelector(".chat-input .input-group");
 
-    // Function to alter chat-input .input-group style
     function toggleChatInputStyles() {
         if (checkbox.checked) {
             chatInputGroup.style.position = 'absolute';
@@ -1765,7 +1569,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Function to alter icon visibility
     function toggleIconVisibility() {
         if (checkbox.checked) {
             iconContainer.classList.add("active");
@@ -1774,11 +1577,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Initialize the state
     toggleChatInputStyles();
     toggleIconVisibility();
 
-    // Add listener for checkbox change
     checkbox.addEventListener("change", function () {
         toggleIconVisibility();
         toggleChatInputStyles();
@@ -1786,12 +1587,47 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// Initialize the preview and settings on page load
+document.getElementById('footer-show').addEventListener('change', (e) => {
+    footerSettings.showFooter = e.target.checked;
+    updateFooterSettings();
+    generateCSS();
+    saveSettings();
+});
+document.getElementById('footer-text').addEventListener('input', (e) => {
+    footerSettings.footerText = e.target.value;
+    updateFooterSettings();
+    generateCSS();
+    saveSettings();
+});
+document.getElementById('footer-text-color').addEventListener('input', (e) => {
+    footerSettings.footerTextColor = e.target.value;
+    updateFooterSettings();
+    generateCSS();
+    saveSettings();
+});
+document.getElementById('footer-font-size').addEventListener('input', (e) => {
+    footerSettings.footerFontSize = e.target.value;
+    updateFooterSettings();
+    generateCSS();
+    saveSettings();
+});
+document.getElementById('footer-font-family').addEventListener('change', (e) => {
+    footerSettings.footerFontFamily = e.target.value;
+    updateFooterSettings();
+    generateCSS();
+    saveSettings();
+});
+document.getElementById('footer-font-weight').addEventListener('change', (e) => {
+    footerSettings.footerFontWeight = e.target.value;
+    updateFooterSettings();
+    generateCSS();
+    saveSettings();
+});
+
 window.onload = function() {
     loadSettings();
     updatePreview();
 };
 </script>
-
 </body>
 </html>
